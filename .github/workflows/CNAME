@@ -21,4 +21,4 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./public  # 你的构建目录
+          publish_dir: ./  # 你的构建目录
