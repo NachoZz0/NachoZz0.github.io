@@ -52,6 +52,24 @@
 <div id="cursor"></div>
 <link rel="stylesheet" href="/css/cursor.min.css">
 <script src="/js/cursor.min.js"></script>
+<!-- HTML 部分 -->
+<audio id="bgMusic" controls loop>
+  <source src="/images/music.mp3" type="audio/mpeg">
+  您的浏览器不支持音频播放。
+</audio>
+
+<!-- JavaScript 部分 -->
+<script>
+  // 尝试自动播放（可能需要用户交互）
+  const audio = new Audio('/images/music.mp3');
+audio.muted = true; // 初始静音
+audio.play();
+
+// 用户点击后取消静音
+document.addEventListener('click', () => {
+  audio.muted = false;
+});
+</script>
 <meta name="generator" content="Hexo 7.3.0"></head>
 <body>
     <div id="layout">
@@ -59,7 +77,7 @@
             <div id="loading" v-show="loading">
                 <div id="loading-circle">
                     <h2>LOADING</h2>
-                    <p>加载过慢请开启缓存 浏览器默认开启</p>
+                    <p>加载过慢请开启缓存 浏览器默认开启 刷新几下再不行就断网重连</p>
                     <img src="/images/loading.gif" />
                 </div>
             </div>
@@ -181,21 +199,21 @@
                         
                         <span class="tag">
                             
-                            <a href="/tags/%E9%9F%B3%E4%B9%90/" style="color: #03a9f4">
+                            <a href="/tags/%E9%9F%B3%E4%B9%90/" style="color: #ff7d73">
                                 音乐
                             </a>
                         </span>
                         
                         <span class="tag">
                             
-                            <a href="/tags/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/" style="color: #00a596">
+                            <a href="/tags/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/" style="color: #ffa2c4">
                                 实用工具
                             </a>
                         </span>
                         
                         <span class="tag">
                             
-                            <a href="/tags/%E6%8F%92%E4%BB%B6/" style="color: #ffa2c4">
+                            <a href="/tags/%E6%8F%92%E4%BB%B6/" style="color: #03a9f4">
                                 插件
                             </a>
                         </span>
@@ -224,14 +242,14 @@
                         
                         <span class="tag">
                             
-                            <a href="/tags/NachoNeko/" style="color: #03a9f4">
+                            <a href="/tags/NachoNeko/" style="color: #00bcd4">
                                 NachoNeko
                             </a>
                         </span>
                         
                         <span class="tag">
                             
-                            <a href="/tags/%E7%94%98%E5%9F%8E%E3%81%AA%E3%81%A4%E3%81%8D/" style="color: #ff7d73">
+                            <a href="/tags/%E7%94%98%E5%9F%8E%E3%81%AA%E3%81%A4%E3%81%8D/" style="color: #00a596">
                                 甘城なつき
                             </a>
                         </span>
@@ -260,7 +278,7 @@
                         
                         <span class="tag">
                             
-                            <a href="/tags/%E7%94%9F%E6%B4%BB/" style="color: #ffa2c4">
+                            <a href="/tags/%E7%94%9F%E6%B4%BB/" style="color: #ff7d73">
                                 生活
                             </a>
                         </span>
@@ -274,7 +292,7 @@
                         
                         <span class="tag">
                             
-                            <a href="/tags/Minecraft/" style="color: #00a596">
+                            <a href="/tags/Minecraft/" style="color: #ff7d73">
                                 Minecraft
                             </a>
                         </span>
@@ -303,7 +321,7 @@
                         
                         <span class="tag">
                             
-                            <a href="/tags/%E7%94%9F%E6%B4%BB/" style="color: #00a596">
+                            <a href="/tags/%E7%94%9F%E6%B4%BB/" style="color: #ffa2c4">
                                 生活
                             </a>
                         </span>
@@ -360,7 +378,7 @@
                         
                         <span class="tag">
                             
-                            <a href="/tags/%E7%94%9F%E6%B4%BB/" style="color: #ff7d73">
+                            <a href="/tags/%E7%94%9F%E6%B4%BB/" style="color: #03a9f4">
                                 生活
                             </a>
                         </span>
