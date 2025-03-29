@@ -52,25 +52,179 @@
 <div id="cursor"></div>
 <link rel="stylesheet" href="/css/cursor.min.css">
 <script src="/js/cursor.min.js"></script>
-<!-- HTML 部分 -->
-<audio id="bgMusic" controls loop>
-  <source src="/images/music.mp3" type="audio/mpeg">
-  您的浏览器不支持音频播放。
-</audio>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>透明蓝音乐播放器</title>
+  <!-- 引入 Font Awesome 图标 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <style>
+    /* CSS 样式 */
+    .audio-player {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(180, 222, 255, 0.8); /* 透明蓝色背景 */
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      gap: 25px;
+      z-index: 1000;
+      backdrop-filter: blur(5px); /* 背景模糊效果 */
+    }
 
-<!-- JavaScript 部分 -->
-<script>
-  // 尝试自动播放（可能需要用户交互）
-  const audio = new Audio('/images/music.mp3');
-audio.muted = true; // 初始静音
-audio.play();
+    .song-title {
+      color: white;
+      font-family: Arial, sans-serif;
+      font-size: 16px;
+      min-width: 120px;
+      margin-right: 15px;
+    }
 
-// 用户点击后取消静音
-document.addEventListener('click', () => {
-  audio.muted = false;
-});
-</script>
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      flex-grow: 1;
+    }
+
+    button {
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    button:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    input[type="range"] {
+      width: 200px;
+      height: 4px;
+      cursor: pointer;
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .time-display {
+      color: white;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      min-width: 100px;
+    }
+
+    .volume-control {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .fa-volume-up {
+      color: white;
+      font-size: 18px;
+    }
+  </style>
 <meta name="generator" content="Hexo 7.3.0"></head>
+<body>
+
+  <!-- 音乐播放器 -->
+  <div class="audio-player">
+    <span class="song-title">🎵 「Daylight」- David Kushner</span>
+    <div class="controls">
+      <button id="playBtn">▶ 播放</button>
+      <input type="range" id="progress" value="0" min="0">
+      <span class="time-display" id="time">0:00 / 0:00</span>
+      <div class="volume-control">
+        <i class="fas fa-volume-up"></i>
+        <input type="range" id="volume" min="0" max="1" step="0.1" value="1">
+      </div>
+    </div>
+    <audio id="audio" src="images/music.mp3"></audio>
+  </div>
+  // 别问为什么music塞image里
+  <script>
+    // JavaScript 功能
+    const audio = document.getElementById('audio');
+    const playBtn = document.getElementById('playBtn');
+    const progress = document.getElementById('progress');
+    const volume = document.getElementById('volume');
+    const timeDisplay = document.getElementById('time');
+
+    // ================= 跨页面状态保持 =================
+    // 保存播放状态到 localStorage
+    function savePlaybackState() {
+      localStorage.setItem('audioState', JSON.stringify({
+        currentTime: audio.currentTime,
+        paused: audio.paused,
+        volume: audio.volume
+      }));
+    }
+
+    // 页面关闭前保存状态
+    window.addEventListener('beforeunload', savePlaybackState);
+
+    // 页面加载时恢复状态
+    window.addEventListener('load', () => {
+      const savedState = JSON.parse(localStorage.getItem('audioState') || '{}');
+      if (savedState.currentTime) audio.currentTime = savedState.currentTime;
+      if (savedState.volume) audio.volume = savedState.volume;
+      if (!savedState.paused) audio.play().catch(() => {});
+    });
+
+    // ================= 播放控制 =================
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.textContent = '⏸ 暂停';
+      } else {
+        audio.pause();
+        playBtn.textContent = '▶ 播放';
+      }
+    });
+
+    // ================= 进度条与时间 =================
+    audio.addEventListener('timeupdate', () => {
+      const progressPercent = (audio.currentTime / audio.duration) * 100;
+      progress.value = progressPercent;
+      
+      const formatTime = (seconds) => {
+        const minutes = Math.floor(seconds / 60);
+        seconds = Math.floor(seconds % 60);
+        return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+      };
+      
+      timeDisplay.textContent = `${formatTime(audio.currentTime)} / ${formatTime(audio.duration)}`;
+    });
+
+    progress.addEventListener('input', () => {
+      const seekTime = (progress.value / 100) * audio.duration;
+      audio.currentTime = seekTime;
+    });
+
+    // ================= 音量控制 =================
+    volume.addEventListener('input', () => {
+      audio.volume = volume.value;
+    });
+
+    // ================= 自动播放策略 =================
+    document.addEventListener('click', () => {
+      audio.play().catch(() => {
+        playBtn.textContent = '▶ 播放';
+      });
+    }, { once: true });
+
+    audio.addEventListener('loadedmetadata', () => {
+      progress.max = 100;
+    });
+  </script>
+</body>
+</html>
+</head>
 <body>
     <div id="layout">
         <transition name="fade">
@@ -213,7 +367,7 @@ document.addEventListener('click', () => {
                         
                         <span class="tag">
                             
-                            <a href="/tags/%E6%8F%92%E4%BB%B6/" style="color: #ff7d73">
+                            <a href="/tags/%E6%8F%92%E4%BB%B6/" style="color: #00bcd4">
                                 插件
                             </a>
                         </span>
@@ -242,14 +396,14 @@ document.addEventListener('click', () => {
                         
                         <span class="tag">
                             
-                            <a href="/tags/NachoNeko/" style="color: #ff7d73">
+                            <a href="/tags/NachoNeko/" style="color: #00bcd4">
                                 NachoNeko
                             </a>
                         </span>
                         
                         <span class="tag">
                             
-                            <a href="/tags/%E7%94%98%E5%9F%8E%E3%81%AA%E3%81%A4%E3%81%8D/" style="color: #ffa2c4">
+                            <a href="/tags/%E7%94%98%E5%9F%8E%E3%81%AA%E3%81%A4%E3%81%8D/" style="color: #03a9f4">
                                 甘城なつき
                             </a>
                         </span>
@@ -278,21 +432,21 @@ document.addEventListener('click', () => {
                         
                         <span class="tag">
                             
-                            <a href="/tags/%E7%94%9F%E6%B4%BB/" style="color: #ffa2c4">
+                            <a href="/tags/%E7%94%9F%E6%B4%BB/" style="color: #ff7d73">
                                 生活
                             </a>
                         </span>
                         
                         <span class="tag">
                             
-                            <a href="/tags/%E6%B8%B8%E6%88%8F/" style="color: #03a9f4">
+                            <a href="/tags/%E6%B8%B8%E6%88%8F/" style="color: #ffa2c4">
                                 游戏
                             </a>
                         </span>
                         
                         <span class="tag">
                             
-                            <a href="/tags/Minecraft/" style="color: #ff7d73">
+                            <a href="/tags/Minecraft/" style="color: #00bcd4">
                                 Minecraft
                             </a>
                         </span>
@@ -328,14 +482,14 @@ document.addEventListener('click', () => {
                         
                         <span class="tag">
                             
-                            <a href="/tags/%E6%B8%B8%E6%88%8F/" style="color: #ff7d73">
+                            <a href="/tags/%E6%B8%B8%E6%88%8F/" style="color: #00a596">
                                 游戏
                             </a>
                         </span>
                         
                         <span class="tag">
                             
-                            <a href="/tags/Minecraft/" style="color: #00bcd4">
+                            <a href="/tags/Minecraft/" style="color: #ff7d73">
                                 Minecraft
                             </a>
                         </span>
@@ -378,7 +532,7 @@ document.addEventListener('click', () => {
                         
                         <span class="tag">
                             
-                            <a href="/tags/%E7%94%9F%E6%B4%BB/" style="color: #ffa2c4">
+                            <a href="/tags/%E7%94%9F%E6%B4%BB/" style="color: #ff7d73">
                                 生活
                             </a>
                         </span>
