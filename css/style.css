@@ -1,0 +1,142 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* 播放器容器 */
+.audio-player {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(180, 222, 255, 0.8);
+  z-index: 1000;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  max-height: 30px;
+  overflow: hidden;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.audio-player.expanded {
+  max-height: 120px;
+}
+
+/* 标题栏 */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  cursor: pointer;
+  height: 60px;
+}
+
+.song-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.song-title {
+  color: white;
+  font-family: 'Arial', sans-serif;
+  font-size: 15px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
+}
+
+.music-icon {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* 控制区域 */
+.controls-container {
+  padding: 0 20px 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* 播放控制 */
+.playback-controls {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+#playBtn {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+/* 进度条 */
+.progress-container {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+#progress {
+  flex-grow: 1;
+  height: 4px;
+  cursor: pointer;
+  accent-color: rgba(255, 255, 255, 0.7);
+}
+
+.time-display {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 12px;
+  font-family: monospace;
+  min-width: 90px;
+  text-align: center;
+}
+
+/* 音量控制 */
+.volume-control {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.volume-icon {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 14px;
+}
+
+#volume {
+  width: 80px;
+  height: 4px;
+  accent-color: rgba(255, 255, 255, 0.7);
+}
+
+/* 切换按钮动画 */
+.toggle-btn {
+  transition: transform 0.3s;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 14px;
+}
+
+@media (max-width: 600px) {
+  .song-title {
+    max-width: 120px;
+  }
+  #progress {
+    width: 100px;
+  }
+  .time-display {
+    min-width: 70px;
+  }
+}

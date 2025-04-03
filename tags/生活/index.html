@@ -5,12 +5,11 @@
     <meta charset="utf-8" />
     <title>Tags: 生活 | NachoZzの小窝</title>
     <meta name="author" content="NachoZz" />
-    <meta name="description" content="客官里面请 " />
+    <meta name="description" content=" " />
     <meta name="keywords" content="" />
     <meta
         name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
-    />
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
     <link rel="icon" href="/images/avatar.jpg" />
     <link rel="preconnect" href="https://s4.zstatic.net" />
 <script src="https://s4.zstatic.net/ajax/libs/vue/3.3.7/vue.global.prod.min.js"></script>
@@ -52,294 +51,35 @@
 <div id="cursor"></div>
 <link rel="stylesheet" href="/css/cursor.min.css">
 <script src="/js/cursor.min.js"></script>
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-  <meta charset="UTF-8">
-  <title>紧凑型音乐播放器</title>
+  <title>可伸缩音乐播放器</title>
+  <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-  <style>
-    /* 基础重置 */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    /* 播放器容器 */
-    .audio-player {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: rgba(180, 222, 255, 0.8);
-      z-index: 1000;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      max-height: 30px; /* 折叠高度减小到60px */
-      overflow: hidden;
-      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
-    }
-
-    .audio-player.expanded {
-      max-height: 120px; /* 展开高度不变 */
-    }
-
-    /* 标题栏 */
-    .header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 12px 20px;
-      cursor: pointer;
-      height: 60px; /* 固定标题栏高度 */
-    }
-
-    .song-info {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      min-width: 0;
-    }
-
-    .song-title {
-      color: white;
-      font-family: 'Arial', sans-serif;
-      font-size: 15px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      max-width: 200px;
-    }
-
-    .music-icon {
-      font-size: 16px;
-      color: rgba(255, 255, 255, 0.9);
-    }
-
-    /* 控制区域 */
-    .controls-container {
-      padding: 0 20px 15px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    /* 播放控制 */
-    .playback-controls {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-    }
-
-    #playBtn {
-      background: rgba(255, 255, 255, 0.15);
-      border-radius: 50%;
-      width: 36px;
-      height: 36px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0;
-    }
-
-    /* 进度条 */
-    .progress-container {
-      flex-grow: 1;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    #progress {
-      flex-grow: 1;
-      height: 4px;
-      cursor: pointer;
-      accent-color: rgba(255, 255, 255, 0.7);
-    }
-
-    .time-display {
-      color: rgba(255, 255, 255, 0.8);
-      font-size: 12px;
-      font-family: monospace;
-      min-width: 90px;
-      text-align: center;
-    }
-
-    /* 音量控制 */
-    .volume-control {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-left: auto;
-    }
-
-    .volume-icon {
-      color: rgba(255, 255, 255, 0.8);
-      font-size: 14px;
-    }
-
-    #volume {
-      width: 80px;
-      height: 4px;
-      accent-color: rgba(255, 255, 255, 0.7);
-    }
-
-    /* 切换按钮动画 */
-    .toggle-btn {
-      transition: transform 0.3s;
-      color: rgba(255, 255, 255, 0.8);
-      font-size: 14px;
-    }
-
-    /* 响应式调整 */
-    @media (max-width: 600px) {
-      .song-title {
-        max-width: 120px;
-      }
-      #progress {
-        width: 100px;
-      }
-      .time-display {
-        min-width: 70px;
-      }
-    }
-  </style>
 <meta name="generator" content="Hexo 7.3.0"></head>
 <body>
-  <!-- 音乐播放器 -->
   <div class="audio-player" id="player">
-    <!-- 标题栏 -->
     <div class="header" id="toggleHeader">
       <div class="song-info">
         <i class="fas fa-music music-icon"></i>
-        <span class="song-title">「Daylight」 - Seredris</span>
+        <span class="song-title">「Daylight」- Seredris</span>
       </div>
       <i class="fas fa-chevron-up toggle-btn" id="toggleBtn"></i>
     </div>
-    
-    <!-- 控制区域 -->
     <div class="controls-container">
-      <!-- 播放控制 -->
       <div class="playback-controls">
         <button id="playBtn"><i class="fas fa-play"></i></button>
-        
         <div class="progress-container">
           <input type="range" id="progress" value="0" min="0">
           <span class="time-display" id="time">0:00 / 3:45</span>
         </div>
       </div>
-      
-      <!-- 音量控制 -->
       <div class="volume-control">
         <i class="fas fa-volume-up volume-icon"></i>
         <input type="range" id="volume" min="0" max="1" step="0.1" value="1">
       </div>
     </div>
-    
-    <audio id="audio" src="images/music.mp3"></audio>
+    <audio id="audio" src="/images/music.mp3"></audio>
   </div>
-
-  <script>
-    // DOM元素
-    const player = document.getElementById('player');
-    const toggleBtn = document.getElementById('toggleBtn');
-    const toggleHeader = document.getElementById('toggleHeader');
-    const audio = document.getElementById('audio');
-    const playBtn = document.getElementById('playBtn');
-    const progress = document.getElementById('progress');
-    const volume = document.getElementById('volume');
-    const timeDisplay = document.getElementById('time');
-
-    // ================= 状态管理 =================
-    let isExpanded = localStorage.getItem('playerExpanded') === 'true';
-
-    // 初始化播放器状态
-    function initPlayerState() {
-      player.classList.toggle('expanded', isExpanded);
-      toggleBtn.style.transform = isExpanded ? 'rotate(180deg)' : 'none';
-      updatePlayButton();
-    }
-
-    // 更新播放按钮图标
-    function updatePlayButton() {
-      const icon = playBtn.querySelector('i');
-      icon.className = audio.paused ? 'fas fa-play' : 'fas fa-pause';
-    }
-
-    // ================= 伸缩控制 =================
-    toggleHeader.addEventListener('click', () => {
-      isExpanded = !isExpanded;
-      player.classList.toggle('expanded');
-      toggleBtn.style.transform = isExpanded ? 'rotate(180deg)' : 'none';
-      localStorage.setItem('playerExpanded', isExpanded);
-    });
-
-    // ================= 播放控制 =================
-    playBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      if (audio.paused) {
-        audio.play().catch(e => console.log('播放失败:', e));
-      } else {
-        audio.pause();
-      }
-      updatePlayButton();
-    });
-
-    // ================= 进度控制 =================
-    audio.addEventListener('timeupdate', () => {
-      progress.value = (audio.currentTime / audio.duration) * 100 || 0;
-      timeDisplay.textContent = `${formatTime(audio.currentTime)} / ${formatTime(audio.duration)}`;
-    });
-
-    progress.addEventListener('input', () => {
-      audio.currentTime = (progress.value / 100) * audio.duration;
-    });
-
-    // ================= 音量控制 =================
-    volume.addEventListener('input', () => {
-      audio.volume = volume.value;
-      localStorage.setItem('volume', volume.value);
-    });
-
-    // ================= 工具函数 =================
-    function formatTime(seconds) {
-      const mins = Math.floor(seconds / 60);
-      const secs = Math.floor(seconds % 60);
-      return `${mins}:${secs.toString().padStart(2, '0')}`;
-    }
-
-    // ================= 初始化 =================
-    window.addEventListener('load', () => {
-      // 恢复状态
-      initPlayerState();
-      audio.volume = localStorage.getItem('volume') || 1;
-      volume.value = audio.volume;
-      
-      // 尝试恢复播放进度
-      const savedTime = localStorage.getItem('audioTime');
-      if (savedTime) audio.currentTime = parseFloat(savedTime);
-      
-      // 自动保存状态
-      setInterval(() => {
-        if (!audio.paused) {
-          localStorage.setItem('audioTime', audio.currentTime);
-        }
-      }, 1000);
-    });
-
-    // 首次交互后尝试自动播放
-    document.addEventListener('click', () => {
-      audio.play().then(() => {
-        updatePlayButton();
-      }).catch(e => {
-        console.log('自动播放被阻止:', e);
-      });
-    }, { once: true });
-  </script>
-</body>
-</html>
-</head>
-<body>
+  <script src="/js/script.js"></script>
     <div id="layout">
         <transition name="fade">
             <div id="loading" v-show="loading">
@@ -464,7 +204,7 @@
         
         
         <span>
-            <a href="/tags/%E6%B8%B8%E6%88%8F/" style="background: #ff7d73">
+            <a href="/tags/%E6%B8%B8%E6%88%8F/" style="background: #ffa2c4">
                 <span class="icon">
                     <i class="fa-solid fa-tags fa-fw"></i>
                 </span>
@@ -475,7 +215,7 @@
         
         
         <span>
-            <a href="/tags/Minecraft/" style="background: #00bcd4">
+            <a href="/tags/Minecraft/" style="background: #03a9f4">
                 <span class="icon">
                     <i class="fa-solid fa-tags fa-fw"></i>
                 </span>
@@ -497,7 +237,7 @@
         
         
         <span>
-            <a href="/tags/%E7%94%98%E5%9F%8E%E3%81%AA%E3%81%A4%E3%81%8D/" style="background: #00a596">
+            <a href="/tags/%E7%94%98%E5%9F%8E%E3%81%AA%E3%81%A4%E3%81%8D/" style="background: #03a9f4">
                 <span class="icon">
                     <i class="fa-solid fa-tags fa-fw"></i>
                 </span>
@@ -508,7 +248,7 @@
         
         
         <span>
-            <a href="/tags/%E9%9F%B3%E4%B9%90/" style="background: #ff7d73">
+            <a href="/tags/%E9%9F%B3%E4%B9%90/" style="background: #ffa2c4">
                 <span class="icon">
                     <i class="fa-solid fa-tags fa-fw"></i>
                 </span>
@@ -519,7 +259,7 @@
         
         
         <span>
-            <a href="/tags/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/" style="background: #00bcd4">
+            <a href="/tags/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/" style="background: #ff7d73">
                 <span class="icon">
                     <i class="fa-solid fa-tags fa-fw"></i>
                 </span>
@@ -541,7 +281,7 @@
         
         
         <span>
-            <a href="/tags/hsr/" style="background: #00bcd4">
+            <a href="/tags/hsr/" style="background: #ff7d73">
                 <span class="icon">
                     <i class="fa-solid fa-tags fa-fw"></i>
                 </span>
@@ -552,7 +292,7 @@
         
         
         <span>
-            <a href="/tags/leak/" style="background: #ff7d73">
+            <a href="/tags/leak/" style="background: #00bcd4">
                 <span class="icon">
                     <i class="fa-solid fa-tags fa-fw"></i>
                 </span>
@@ -581,7 +321,7 @@
                     
                     <span class="tag">
                         
-                        <a href="/tags/%E7%94%9F%E6%B4%BB/" style="color: #ffa2c4">
+                        <a href="/tags/%E7%94%9F%E6%B4%BB/" style="color: #ff7d73">
                             生活
                         </a>
                     </span>
@@ -610,7 +350,7 @@
                     
                     <span class="tag">
                         
-                        <a href="/tags/%E7%94%9F%E6%B4%BB/" style="color: #00bcd4">
+                        <a href="/tags/%E7%94%9F%E6%B4%BB/" style="color: #03a9f4">
                             生活
                         </a>
                     </span>
@@ -624,7 +364,7 @@
                     
                     <span class="tag">
                         
-                        <a href="/tags/Minecraft/" style="color: #03a9f4">
+                        <a href="/tags/Minecraft/" style="color: #ff7d73">
                             Minecraft
                         </a>
                     </span>
@@ -653,21 +393,21 @@
                     
                     <span class="tag">
                         
-                        <a href="/tags/%E7%94%9F%E6%B4%BB/" style="color: #ffa2c4">
+                        <a href="/tags/%E7%94%9F%E6%B4%BB/" style="color: #03a9f4">
                             生活
                         </a>
                     </span>
                     
                     <span class="tag">
                         
-                        <a href="/tags/%E6%B8%B8%E6%88%8F/" style="color: #ff7d73">
+                        <a href="/tags/%E6%B8%B8%E6%88%8F/" style="color: #ffa2c4">
                             游戏
                         </a>
                     </span>
                     
                     <span class="tag">
                         
-                        <a href="/tags/Minecraft/" style="color: #ffa2c4">
+                        <a href="/tags/Minecraft/" style="color: #00bcd4">
                             Minecraft
                         </a>
                     </span>
