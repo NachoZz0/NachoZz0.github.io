@@ -3,7 +3,7 @@
 <html lang="zh-cn">
 <head>
     <meta charset="utf-8" />
-    <title>Tags: leak | NachoZzの小窝</title>
+    <title>NachoZzの小窝</title>
     <meta name="author" content="NachoZz" />
     <meta name="description" content="端午节享受假期，儿童节享受儿童🤤 " />
     <meta name="keywords" content="" />
@@ -40,6 +40,8 @@
 
 
 
+
+<script src="/js/lib/home.js"></script>
 
 <link rel="stylesheet" href="/css/main.css" />
 
@@ -184,170 +186,154 @@
 </transition>
 
         <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
-            <div id="archives">
-    
-    <div class="categories-tags">
-        
-        
-        
-        <span>
-            <a href="/tags/hsr/" style="background: #ff7d73">
-                <span class="icon">
-                    <i class="fa-solid fa-tags fa-fw"></i>
-                </span>
-                hsr
-            </a>
+            <div id="home-head">
+    <div
+        id="home-background"
+        ref="homeBackground"
+        data-images="https://s1.imagehub.cc/images/2025/05/03/77a523be7832bba6bf7e939280a5ad5d.png,https://s1.imagehub.cc/images/2025/05/03/6f6d7950560b980a9c92791a998ac6a2.png,https://s1.imagehub.cc/images/2025/05/03/f1c87b1b921510126b3aec09b96265ba.png,https://s1.imagehub.cc/images/2025/05/03/9e938e84f47e1434f806b1e4d9d4bf8b.png,https://s1.imagehub.cc/images/2025/05/03/a565f8d04d7da2535e04a39d13060c5b.png"
+    ></div>
+    <div id="home-info" @click="homeClick">
+        <span class="loop"></span>
+        <span class="loop"></span>
+        <span class="loop"></span>
+        <span class="loop"></span>
+        <span class="info">
+            <div class="wrap">
+                <h1>NachoZzの小窝</h1>
+                <h3>世界本就破破烂烂，总有人来缝缝补补</h3>
+                <h5>端午节享受假期，儿童节享受儿童🤤 </h5>
+            </div>
         </span>
+    </div>
+</div>
+<div
+    id="home-posts-wrap"
+    ref="homePostsWrap"
+    true
+>
+    <div id="home-posts">
         
+
+<div class="post">
+    <a href="/2025/01/17/%E7%BD%91%E6%98%93%E4%BA%91%E9%9F%B3%E4%B9%90%EF%BC%88%E6%9D%9C%E6%AF%94%E5%A4%A7%E5%96%87%E5%8F%AD%EF%BC%89/">
+        <h2 class="post-title">网易云音乐（杜比大喇叭）</h2>
+    </a>
+    <div class="category-and-date">
         
-        
-        <span>
-            <a href="/tags/%E6%B8%B8%E6%88%8F/" style="background: #ffa2c4">
-                <span class="icon">
-                    <i class="fa-solid fa-tags fa-fw"></i>
-                </span>
-                游戏
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/tags/leak/" style="background: linear-gradient(120deg, #9abbf7 0%, #ffbbf4 100%)">
-                <span class="icon">
-                    <i class="fa-solid fa-tags fa-fw"></i>
-                </span>
-                leak
-            </a>
-        </span>
-        
-        
-        
-        
-        
-        <span>
-            <a href="/tags/minecraft/" style="background: #ffa2c4">
-                <span class="icon">
-                    <i class="fa-solid fa-tags fa-fw"></i>
-                </span>
-                minecraft
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/tags/NachoNeko/" style="background: #03a9f4">
-                <span class="icon">
-                    <i class="fa-solid fa-tags fa-fw"></i>
-                </span>
-                NachoNeko
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/tags/%E7%94%98%E5%9F%8E%E3%81%AA%E3%81%A4%E3%81%8D/" style="background: #ffa2c4">
-                <span class="icon">
-                    <i class="fa-solid fa-tags fa-fw"></i>
-                </span>
-                甘城なつき
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/tags/%E7%94%9F%E6%B4%BB/" style="background: #00a596">
-                <span class="icon">
-                    <i class="fa-solid fa-tags fa-fw"></i>
-                </span>
-                生活
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/tags/Minecraft/" style="background: #03a9f4">
-                <span class="icon">
-                    <i class="fa-solid fa-tags fa-fw"></i>
-                </span>
-                Minecraft
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/tags/%E9%9F%B3%E4%B9%90/" style="background: #ffa2c4">
-                <span class="icon">
-                    <i class="fa-solid fa-tags fa-fw"></i>
-                </span>
-                音乐
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/tags/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/" style="background: #03a9f4">
-                <span class="icon">
-                    <i class="fa-solid fa-tags fa-fw"></i>
-                </span>
-                实用工具
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/tags/%E6%8F%92%E4%BB%B6/" style="background: #ffa2c4">
-                <span class="icon">
-                    <i class="fa-solid fa-tags fa-fw"></i>
-                </span>
-                插件
-            </a>
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2025/1/17
         </span>
         
         
     </div>
-    
-    <div class="timeline">
-        <div class="timeline-tail"></div>
-        <div class="timeline-content">
-            <div class="item-time">2025/3/30</div>
-            <a href="/2025/03/30/leak/">
-                <h3>星铁漏水区</h3>
-            </a>
-            <div class="info">
-                
-                
-                <span class="tags">
-                    <span class="icon">
-                        <i class="fa-solid fa-tags fa-fw"></i>
-                    </span>
-                    
-                    
-                    <span class="tag">
-                        
-                        <a href="/tags/hsr/" style="color: #ffa2c4">
-                            hsr
-                        </a>
-                    </span>
-                    
-                    <span class="tag">
-                        
-                        <a href="/tags/leak/" style="color: #ff7d73">
-                            leak
-                        </a>
-                    </span>
-                    
-                </span>
-                
-            </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+            <p>网易云音乐换源插件内置（可以听所有歌）</p>
+
+            
         </div>
+    </div>
+    <div class="post-tags">
+        
+        <span class="icon">
+            <i class="fa-solid fa-tags fa-fw"></i>
+        </span>
+        
+        
+        
+        <span class="tag">
+            
+            <a href="/tags/%E9%9F%B3%E4%B9%90/" style="color: #03a9f4">音乐</a>
+        </span>
+        
+        <span class="tag">
+            
+            <a href="/tags/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/" style="color: #00a596">实用工具</a>
+        </span>
+        
+        <span class="tag">
+            
+            <a href="/tags/%E6%8F%92%E4%BB%B6/" style="color: #ff7d73">插件</a>
+        </span>
+        
+    </div>
+    <a href="/2025/01/17/%E7%BD%91%E6%98%93%E4%BA%91%E9%9F%B3%E4%B9%90%EF%BC%88%E6%9D%9C%E6%AF%94%E5%A4%A7%E5%96%87%E5%8F%AD%EF%BC%89/" class="go-post">阅读全文</a>
+</div>
+
+
+        <div class="page-current">
+    
+    <a class="page-num" href="/">
+        <i class="fa-solid fa-caret-left fa-fw"></i>
+    </a>
+    <a class="page-num" href="/">1</a>
+    <span class="page-omit">...</span>
+    
+    <span class="current">2</span>
+    
+    
+    
+    
+</div>
+
+    </div>
+    
+    <div id="home-card">
+        <div id="card-style">
+    <div id="card-div">
+        <div class="avatar">
+            <img src="/images/avatar.jpg" alt="avatar" />
+        </div>
+        <div class="name">NachoZz</div>
+        <div class="description">
+            <p>Description<br>a甘城なつきlover<br>社恐小高中牲,欢迎网络上打扰</p>
+
+        </div>
+        
+        <div class="icon-links">
+            
+            <span class="icon-link">
+                <a target="_blank" rel="noopener" href="https://github.com/nachozz0">
+                    <i
+                        class="fa-brands fa-github fa-fw"
+                    ></i>
+                </a>
+            </span>
+            
+            <span class="icon-link">
+                <a target="_blank" rel="noopener" href="http://wpa.qq.com/msgrd?v=3&uin=269788436&site=qq&menu=yes">
+                    <i
+                        class="fa-brands fa-qq fa-fw"
+                    ></i>
+                </a>
+            </span>
+            
+            <span class="icon-link">
+                <a target="_blank" rel="noopener" href="https://t.me/miho_yo">
+                    <i
+                        class="fa-brands fa-telegram fa-fw"
+                    ></i>
+                </a>
+            </span>
+            
+            <span class="icon-link">
+                <a target="_blank" rel="noopener" href="https://space.bilibili.com/524165673?spm_id_from=333.1007.0.0">
+                    <i
+                        class="fa-brands fa-bilibili fa-fw"
+                    ></i>
+                </a>
+            </span>
+            
+        </div>
+        
+        
+    </div>
+</div>
+
     </div>
     
 </div>
