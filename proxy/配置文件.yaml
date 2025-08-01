@@ -1,0 +1,76 @@
+mixed-port: 7890
+allow-lan: true
+bind-address: '*'
+mode: rule
+log-level: info
+external-controller: '127.0.0.1:9090'
+dns:
+    enable: true
+    ipv6: false
+    default-nameserver: [119.29.29.29, 114.114.114.114]
+    enhanced-mode: fake-ip
+    fake-ip-range: 198.18.0.1/16
+    use-hosts: true
+    nameserver: ['https://doh.pub/dns-query', 'https://dns.alidns.com/dns-query']
+    fallback: [223.6.6.6, 223.5.5.5, 'tls://1.0.0.1:853', 'tls://dns.google:853']
+    fallback-filter: { geoip: true, ipcidr: [240.0.0.0/4, 0.0.0.0/32] }
+proxies:
+    - { name: '[trojan]剩余流量：15 GB', type: trojan, server: csgo.com, port: 8443, password: 771da4be-3b2d-4586-b808-97335806a908, udp: true, sni: cdn-node-oss-01.paofu.de, skip-cert-verify: true, network: ws, ws-opts: { path: /profile/us1, headers: { Host: cdn-node-oss-01.paofu.de } } }
+    - { name: '[trojan]套餐到期：2026-02-01', type: trojan, server: csgo.com, port: 8443, password: 771da4be-3b2d-4586-b808-97335806a908, udp: true, sni: cdn-node-oss-01.paofu.de, skip-cert-verify: true, network: ws, ws-opts: { path: /profile/us1, headers: { Host: cdn-node-oss-01.paofu.de } } }
+    - { name: '[trojan]防失联:https://ssrsub.com', type: trojan, server: csgo.com, port: 8443, password: 771da4be-3b2d-4586-b808-97335806a908, udp: true, sni: cdn-node-oss-01.paofu.de, skip-cert-verify: true, network: ws, ws-opts: { path: /profile/us1, headers: { Host: cdn-node-oss-01.paofu.de } } }
+    - { name: '[trojan]官网:https://ssrsub.de', type: trojan, server: csgo.com, port: 8443, password: 771da4be-3b2d-4586-b808-97335806a908, udp: true, sni: cdn-node-oss-02.paofu.de, skip-cert-verify: true, network: ws, ws-opts: { path: /profile/u2, headers: { Host: cdn-node-oss-02.paofu.de } } }
+    - { name: '[trojan]付费推荐：https://dafei.de', type: trojan, server: csgo.com, port: 8443, password: 771da4be-3b2d-4586-b808-97335806a908, udp: true, sni: cdn-node-oss-02.paofu.de, skip-cert-verify: true, network: ws, ws-opts: { path: /profile/u2, headers: { Host: cdn-node-oss-02.paofu.de } } }
+    - { name: '[trojan]🇺🇸 美国 公益 T01', type: trojan, server: csgo.com, port: 8443, password: 771da4be-3b2d-4586-b808-97335806a908, udp: true, sni: cdn-node-oss-01.paofu.de, skip-cert-verify: true, network: ws, ws-opts: { path: /profile/us1, headers: { Host: cdn-node-oss-01.paofu.de } } }
+    - { name: '[trojan]🇺🇸 美国 公益 T02', type: trojan, server: csgo.com, port: 8443, password: 771da4be-3b2d-4586-b808-97335806a908, udp: true, sni: cdn-node-oss-02.paofu.de, skip-cert-verify: true, network: ws, ws-opts: { path: /profile/u2, headers: { Host: cdn-node-oss-02.paofu.de } } }
+    - { name: '[Hy2]🇺🇸 美国 公益 H01', server: 107.173.127.166, port: 25000, sni: www.apple.com, up: 15, down: 15, skip-cert-verify: true, type: hysteria2, password: 771da4be-3b2d-4586-b808-97335806a908 }
+    - { name: '[Hy2]🇺🇸 美国 公益 H02', server: 198.23.130.211, port: 25000, sni: api.push.apple.com, up: 15, down: 15, skip-cert-verify: true, type: hysteria2, password: 771da4be-3b2d-4586-b808-97335806a908 }
+proxy-groups:
+    - { name: '🚀 节点选择', type: select, proxies: ['♻️ 自动选择', DIRECT, '[trojan]剩余流量：15 GB', '[trojan]套餐到期：2026-02-01', '[trojan]防失联:https://ssrsub.com', '[trojan]官网:https://ssrsub.de', '[trojan]付费推荐：https://dafei.de', '[trojan]🇺🇸 美国 公益 T01', '[trojan]🇺🇸 美国 公益 T02', '[Hy2]🇺🇸 美国 公益 H01', '[Hy2]🇺🇸 美国 公益 H02'] }
+    - { name: '♻️ 自动选择', type: url-test, url: 'http://cp.cloudflare.com/generate_204', interval: 300, tolerance: 50, proxies: [DIRECT, '[trojan]剩余流量：15 GB', '[trojan]套餐到期：2026-02-01', '[trojan]防失联:https://ssrsub.com', '[trojan]官网:https://ssrsub.de', '[trojan]付费推荐：https://dafei.de', '[trojan]🇺🇸 美国 公益 T01', '[trojan]🇺🇸 美国 公益 T02', '[Hy2]🇺🇸 美国 公益 H01', '[Hy2]🇺🇸 美国 公益 H02'] }
+    - { name: '🌍 国外媒体', type: select, proxies: ['🚀 节点选择', '♻️ 自动选择', '🎯 全球直连', '[trojan]剩余流量：15 GB', '[trojan]套餐到期：2026-02-01', '[trojan]防失联:https://ssrsub.com', '[trojan]官网:https://ssrsub.de', '[trojan]付费推荐：https://dafei.de', '[trojan]🇺🇸 美国 公益 T01', '[trojan]🇺🇸 美国 公益 T02', '[Hy2]🇺🇸 美国 公益 H01', '[Hy2]🇺🇸 美国 公益 H02'] }
+    - { name: '📲 电报信息', type: select, proxies: ['🚀 节点选择', '🎯 全球直连', '[trojan]剩余流量：15 GB', '[trojan]套餐到期：2026-02-01', '[trojan]防失联:https://ssrsub.com', '[trojan]官网:https://ssrsub.de', '[trojan]付费推荐：https://dafei.de', '[trojan]🇺🇸 美国 公益 T01', '[trojan]🇺🇸 美国 公益 T02', '[Hy2]🇺🇸 美国 公益 H01', '[Hy2]🇺🇸 美国 公益 H02'] }
+    - { name: 'Ⓜ️ 微软服务', type: select, proxies: ['🎯 全球直连', '🚀 节点选择', '[trojan]剩余流量：15 GB', '[trojan]套餐到期：2026-02-01', '[trojan]防失联:https://ssrsub.com', '[trojan]官网:https://ssrsub.de', '[trojan]付费推荐：https://dafei.de', '[trojan]🇺🇸 美国 公益 T01', '[trojan]🇺🇸 美国 公益 T02', '[Hy2]🇺🇸 美国 公益 H01', '[Hy2]🇺🇸 美国 公益 H02'] }
+    - { name: '🍎 苹果服务', type: select, proxies: ['🚀 节点选择', '🎯 全球直连', '[trojan]剩余流量：15 GB', '[trojan]套餐到期：2026-02-01', '[trojan]防失联:https://ssrsub.com', '[trojan]官网:https://ssrsub.de', '[trojan]付费推荐：https://dafei.de', '[trojan]🇺🇸 美国 公益 T01', '[trojan]🇺🇸 美国 公益 T02', '[Hy2]🇺🇸 美国 公益 H01', '[Hy2]🇺🇸 美国 公益 H02'] }
+    - { name: '📢 谷歌FCM', type: select, proxies: ['🚀 节点选择', '🎯 全球直连', '♻️ 自动选择', '[trojan]剩余流量：15 GB', '[trojan]套餐到期：2026-02-01', '[trojan]防失联:https://ssrsub.com', '[trojan]官网:https://ssrsub.de', '[trojan]付费推荐：https://dafei.de', '[trojan]🇺🇸 美国 公益 T01', '[trojan]🇺🇸 美国 公益 T02', '[Hy2]🇺🇸 美国 公益 H01', '[Hy2]🇺🇸 美国 公益 H02'] }
+    - { name: '🎯 全球直连', type: select, proxies: [DIRECT, '🚀 节点选择', '♻️ 自动选择', '[trojan]剩余流量：15 GB', '[trojan]套餐到期：2026-02-01', '[trojan]防失联:https://ssrsub.com', '[trojan]官网:https://ssrsub.de', '[trojan]付费推荐：https://dafei.de', '[trojan]🇺🇸 美国 公益 T01', '[trojan]🇺🇸 美国 公益 T02', '[Hy2]🇺🇸 美国 公益 H01', '[Hy2]🇺🇸 美国 公益 H02'] }
+    - { name: '🛑 全球拦截', type: select, proxies: [REJECT, DIRECT, '[trojan]剩余流量：15 GB', '[trojan]套餐到期：2026-02-01', '[trojan]防失联:https://ssrsub.com', '[trojan]官网:https://ssrsub.de', '[trojan]付费推荐：https://dafei.de', '[trojan]🇺🇸 美国 公益 T01', '[trojan]🇺🇸 美国 公益 T02', '[Hy2]🇺🇸 美国 公益 H01', '[Hy2]🇺🇸 美国 公益 H02'] }
+    - { name: '🍃 应用净化', type: select, proxies: [REJECT, DIRECT, '[trojan]剩余流量：15 GB', '[trojan]套餐到期：2026-02-01', '[trojan]防失联:https://ssrsub.com', '[trojan]官网:https://ssrsub.de', '[trojan]付费推荐：https://dafei.de', '[trojan]🇺🇸 美国 公益 T01', '[trojan]🇺🇸 美国 公益 T02', '[Hy2]🇺🇸 美国 公益 H01', '[Hy2]🇺🇸 美国 公益 H02'] }
+    - { name: '🐟 漏网之鱼', type: select, proxies: ['🚀 节点选择', '🎯 全球直连', '♻️ 自动选择', '[trojan]剩余流量：15 GB', '[trojan]套餐到期：2026-02-01', '[trojan]防失联:https://ssrsub.com', '[trojan]官网:https://ssrsub.de', '[trojan]付费推荐：https://dafei.de', '[trojan]🇺🇸 美国 公益 T01', '[trojan]🇺🇸 美国 公益 T02', '[Hy2]🇺🇸 美国 公益 H01', '[Hy2]🇺🇸 美国 公益 H02'] }
+rule-providers:
+    LocalAreaNetwork: { behavior: classical, format: text, interval: 3600, path: ./ruleset/LocalAreaNetwork.list, type: http, url: 'https://testingcf.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/LocalAreaNetwork.list' }
+    UnBan: { behavior: classical, format: text, interval: 3600, path: ./ruleset/UnBan.list, type: http, url: 'https://testingcf.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/UnBan.list' }
+    BanAD: { behavior: classical, format: text, interval: 3600, path: ./ruleset/BanAD.list, type: http, url: 'https://testingcf.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/BanAD.list' }
+    BanProgramAD: { behavior: classical, format: text, interval: 3600, path: ./ruleset/BanProgramAD.list, type: http, url: 'https://testingcf.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/BanProgramAD.list' }
+    GoogleFCM: { behavior: classical, format: text, interval: 3600, path: ./ruleset/GoogleFCM.list, type: http, url: 'https://testingcf.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Ruleset/GoogleFCM.list' }
+    GoogleCN: { behavior: classical, format: text, interval: 3600, path: ./ruleset/GoogleCN.list, type: http, url: 'https://testingcf.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/GoogleCN.list' }
+    SteamCN: { behavior: classical, format: text, interval: 3600, path: ./ruleset/SteamCN.list, type: http, url: 'https://testingcf.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Ruleset/SteamCN.list' }
+    Microsoft: { behavior: classical, format: text, interval: 3600, path: ./ruleset/Microsoft.list, type: http, url: 'https://testingcf.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Microsoft.list' }
+    Apple: { behavior: classical, format: text, interval: 3600, path: ./ruleset/Apple.list, type: http, url: 'https://testingcf.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Apple.list' }
+    Telegram: { behavior: classical, format: text, interval: 3600, path: ./ruleset/Telegram.list, type: http, url: 'https://testingcf.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Telegram.list' }
+    ProxyMedia: { behavior: classical, format: text, interval: 3600, path: ./ruleset/ProxyMedia.list, type: http, url: 'https://testingcf.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/ProxyMedia.list' }
+    ProxyLite: { behavior: classical, format: text, interval: 3600, path: ./ruleset/ProxyLite.list, type: http, url: 'https://testingcf.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/ProxyLite.list' }
+    ChinaDomain: { behavior: classical, format: text, interval: 3600, path: ./ruleset/ChinaDomain.list, type: http, url: 'https://testingcf.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/ChinaDomain.list' }
+    ChinaCompanyIp: { behavior: classical, format: text, interval: 3600, path: ./ruleset/ChinaCompanyIp.list, type: http, url: 'https://testingcf.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/ChinaCompanyIp.list' }
+rules:
+    - 'IP-CIDR,198.23.130.211/32,DIRECT,no-resolve'
+    - 'IP-CIDR,107.173.127.166/32,DIRECT,no-resolve'
+    - 'IP-CIDR,195.85.59.95/32,DIRECT,no-resolve'
+    - 'IP-CIDR,195.85.59.161/32,DIRECT,no-resolve'
+    - 'DOMAIN,sub.ssrsub.de,DIRECT'
+    - 'RULE-SET,LocalAreaNetwork,🎯 全球直连'
+    - 'RULE-SET,UnBan,🎯 全球直连'
+    - 'RULE-SET,BanAD,🛑 全球拦截'
+    - 'RULE-SET,BanProgramAD,🍃 应用净化'
+    - 'RULE-SET,GoogleFCM,📢 谷歌FCM'
+    - 'RULE-SET,GoogleCN,🎯 全球直连'
+    - 'RULE-SET,SteamCN,🎯 全球直连'
+    - 'RULE-SET,Microsoft,Ⓜ️ 微软服务'
+    - 'RULE-SET,Apple,🍎 苹果服务'
+    - 'RULE-SET,Telegram,📲 电报信息'
+    - 'RULE-SET,ProxyMedia,🌍 国外媒体'
+    - 'RULE-SET,ProxyLite,🚀 节点选择'
+    - 'RULE-SET,ChinaDomain,🎯 全球直连'
+    - 'RULE-SET,ChinaCompanyIp,🎯 全球直连'
+    - 'GEOSITE,CN,🎯 全球直连'
+    - 'GEOIP,CN,🎯 全球直连'
+    - 'MATCH,🐟 漏网之鱼'
