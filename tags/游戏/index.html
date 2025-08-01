@@ -9,7 +9,8 @@
     <meta name="keywords" content="" />
     <meta
         name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+    />
     <link rel="icon" href="/images/avatar.jpg" />
     <link rel="preconnect" href="https://s4.zstatic.net" />
 <script src="https://s4.zstatic.net/ajax/libs/vue/3.3.7/vue.global.prod.min.js"></script>
@@ -43,49 +44,14 @@
 
 <link rel="stylesheet" href="/css/main.css" />
 
-    <canvas id="fireworks" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 32767"></canvas>
-<script src="https://cdn.staticfile.org/animejs/3.2.1/anime.min.js"></script>
-<script src="/js/fireworks.min.js"></script>
-<canvas id="background" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: -1"></canvas>
-<script src="/js/background.min.js"></script>
-<div id="cursor"></div>
-<link rel="stylesheet" href="/css/cursor.min.css">
-<script src="/js/cursor.min.js"></script>
-  <title>可伸缩音乐播放器</title>
-  <link rel="stylesheet" href="/css/style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 <meta name="generator" content="Hexo 7.3.0"></head>
 <body>
-  <div class="audio-player" id="player">
-    <div class="header" id="toggleHeader">
-      <div class="song-info">
-        <i class="fas fa-music music-icon"></i>
-        <span class="song-title">记忆里的花海</span>
-      </div>
-      <i class="fas fa-chevron-up toggle-btn" id="toggleBtn"></i>
-    </div>
-    <div class="controls-container">
-      <div class="playback-controls">
-        <button id="playBtn"><i class="fas fa-play"></i></button>
-        <div class="progress-container">
-          <input type="range" id="progress" value="0" min="0">
-          <span class="time-display" id="time">0:00 / 3:45</span>
-        </div>
-      </div>
-      <div class="volume-control">
-        <i class="fas fa-volume-up volume-icon"></i>
-        <input type="range" id="volume" min="0" max="1" step="0.1" value="1">
-      </div>
-    </div>
-    <audio id="audio" src="/images/music.mp3"></audio>
-  </div>
-  <script src="/js/script.js"></script>
     <div id="layout">
         <transition name="fade">
             <div id="loading" v-show="loading">
                 <div id="loading-circle">
                     <h2>LOADING</h2>
-                    <p>加载过慢请开启缓存 浏览器默认开启 刷新几下再不行就断网重连</p>
+                    <p>加载过慢请开启缓存 浏览器默认开启</p>
                     <img src="/images/loading.gif" />
                 </div>
             </div>
@@ -204,18 +170,7 @@
         
         
         <span>
-            <a href="/tags/leak/" style="background: #ffa2c4">
-                <span class="icon">
-                    <i class="fa-solid fa-tags fa-fw"></i>
-                </span>
-                leak
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/tags/minecraft/" style="background: #00bcd4">
+            <a href="/tags/minecraft/" style="background: #ff7d73">
                 <span class="icon">
                     <i class="fa-solid fa-tags fa-fw"></i>
                 </span>
@@ -248,7 +203,7 @@
         
         
         <span>
-            <a href="/tags/%E7%94%9F%E6%B4%BB/" style="background: #00bcd4">
+            <a href="/tags/%E7%94%9F%E6%B4%BB/" style="background: #ffa2c4">
                 <span class="icon">
                     <i class="fa-solid fa-tags fa-fw"></i>
                 </span>
@@ -259,7 +214,7 @@
         
         
         <span>
-            <a href="/tags/Minecraft/" style="background: #ffa2c4">
+            <a href="/tags/Minecraft/" style="background: #03a9f4">
                 <span class="icon">
                     <i class="fa-solid fa-tags fa-fw"></i>
                 </span>
@@ -270,7 +225,7 @@
         
         
         <span>
-            <a href="/tags/%E9%9F%B3%E4%B9%90/" style="background: #ff7d73">
+            <a href="/tags/%E9%9F%B3%E4%B9%90/" style="background: #00bcd4">
                 <span class="icon">
                     <i class="fa-solid fa-tags fa-fw"></i>
                 </span>
@@ -332,14 +287,14 @@
                     
                     <span class="tag">
                         
-                        <a href="/tags/%E6%B8%B8%E6%88%8F/" style="color: #ff7d73">
+                        <a href="/tags/%E6%B8%B8%E6%88%8F/" style="color: #ffa2c4">
                             游戏
                         </a>
                     </span>
                     
                     <span class="tag">
                         
-                        <a href="/tags/minecraft/" style="color: #03a9f4">
+                        <a href="/tags/minecraft/" style="color: #ff7d73">
                             minecraft
                         </a>
                     </span>
@@ -356,6 +311,42 @@
             <div class="item-time">2025/6/1</div>
             <a href="/2025/06/01/3-3%E5%89%A7%E6%83%85/">
                 <h3>3.3剧情</h3>
+            </a>
+            <div class="info">
+                
+                
+                <span class="tags">
+                    <span class="icon">
+                        <i class="fa-solid fa-tags fa-fw"></i>
+                    </span>
+                    
+                    
+                    <span class="tag">
+                        
+                        <a href="/tags/%E6%B8%B8%E6%88%8F/" style="color: #ffa2c4">
+                            游戏
+                        </a>
+                    </span>
+                    
+                    <span class="tag">
+                        
+                        <a href="/tags/HSR/" style="color: #ff7d73">
+                            HSR
+                        </a>
+                    </span>
+                    
+                </span>
+                
+            </div>
+        </div>
+    </div>
+    
+    <div class="timeline">
+        <div class="timeline-tail"></div>
+        <div class="timeline-content">
+            <div class="item-time">2025/4/13</div>
+            <a href="/2025/04/13/21%E9%81%90%E8%9D%B6%EF%BC%8C%E5%89%8D%E6%9D%A5%E8%BF%98%E6%84%BF/">
+                <h3>21遐蝶已出，前来还愿</h3>
             </a>
             <div class="info">
                 
@@ -389,78 +380,6 @@
     <div class="timeline">
         <div class="timeline-tail"></div>
         <div class="timeline-content">
-            <div class="item-time">2025/5/30</div>
-            <a href="/2025/05/30/HSRps/">
-                <h3>HSR private server for Android</h3>
-            </a>
-            <div class="info">
-                
-                
-                <span class="tags">
-                    <span class="icon">
-                        <i class="fa-solid fa-tags fa-fw"></i>
-                    </span>
-                    
-                    
-                    <span class="tag">
-                        
-                        <a href="/tags/%E6%B8%B8%E6%88%8F/" style="color: #ffa2c4">
-                            游戏
-                        </a>
-                    </span>
-                    
-                    <span class="tag">
-                        
-                        <a href="/tags/HSR/" style="color: #03a9f4">
-                            HSR
-                        </a>
-                    </span>
-                    
-                </span>
-                
-            </div>
-        </div>
-    </div>
-    
-    <div class="timeline">
-        <div class="timeline-tail"></div>
-        <div class="timeline-content">
-            <div class="item-time">2025/4/13</div>
-            <a href="/2025/04/13/21%E9%81%90%E8%9D%B6%EF%BC%8C%E5%89%8D%E6%9D%A5%E8%BF%98%E6%84%BF/">
-                <h3>21遐蝶已出，前来还愿</h3>
-            </a>
-            <div class="info">
-                
-                
-                <span class="tags">
-                    <span class="icon">
-                        <i class="fa-solid fa-tags fa-fw"></i>
-                    </span>
-                    
-                    
-                    <span class="tag">
-                        
-                        <a href="/tags/%E6%B8%B8%E6%88%8F/" style="color: #00a596">
-                            游戏
-                        </a>
-                    </span>
-                    
-                    <span class="tag">
-                        
-                        <a href="/tags/HSR/" style="color: #ff7d73">
-                            HSR
-                        </a>
-                    </span>
-                    
-                </span>
-                
-            </div>
-        </div>
-    </div>
-    
-    <div class="timeline">
-        <div class="timeline-tail"></div>
-        <div class="timeline-content">
             <div class="item-time">2025/4/5</div>
             <a href="/2025/04/05/%E5%88%80%E5%89%91%E5%BC%82%E9%97%BB%E5%BD%95/">
                 <h3>我有一剑，名为万家灯火</h3>
@@ -476,14 +395,14 @@
                     
                     <span class="tag">
                         
-                        <a href="/tags/%E6%B8%B8%E6%88%8F/" style="color: #ff7d73">
+                        <a href="/tags/%E6%B8%B8%E6%88%8F/" style="color: #00bcd4">
                             游戏
                         </a>
                     </span>
                     
                     <span class="tag">
                         
-                        <a href="/tags/minecraft/" style="color: #00bcd4">
+                        <a href="/tags/minecraft/" style="color: #03a9f4">
                             minecraft
                         </a>
                     </span>
@@ -526,7 +445,7 @@
                     
                     <span class="tag">
                         
-                        <a href="/tags/Minecraft/" style="color: #00bcd4">
+                        <a href="/tags/Minecraft/" style="color: #ff7d73">
                             Minecraft
                         </a>
                     </span>
@@ -555,21 +474,21 @@
                     
                     <span class="tag">
                         
-                        <a href="/tags/%E6%B8%B8%E6%88%8F/" style="color: #03a9f4">
+                        <a href="/tags/%E6%B8%B8%E6%88%8F/" style="color: #00a596">
                             游戏
                         </a>
                     </span>
                     
                     <span class="tag">
                         
-                        <a href="/tags/%E7%94%9F%E6%B4%BB/" style="color: #ffa2c4">
+                        <a href="/tags/%E7%94%9F%E6%B4%BB/" style="color: #03a9f4">
                             生活
                         </a>
                     </span>
                     
                     <span class="tag">
                         
-                        <a href="/tags/Minecraft/" style="color: #03a9f4">
+                        <a href="/tags/Minecraft/" style="color: #00bcd4">
                             Minecraft
                         </a>
                     </span>

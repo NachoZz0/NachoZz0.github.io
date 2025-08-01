@@ -9,7 +9,8 @@
     <meta name="keywords" content="" />
     <meta
         name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+    />
     <link rel="icon" href="/images/avatar.jpg" />
     <link rel="preconnect" href="https://s4.zstatic.net" />
 <script src="https://s4.zstatic.net/ajax/libs/vue/3.3.7/vue.global.prod.min.js"></script>
@@ -45,49 +46,14 @@
 
 <link rel="stylesheet" href="/css/main.css" />
 
-    <canvas id="fireworks" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 32767"></canvas>
-<script src="https://cdn.staticfile.org/animejs/3.2.1/anime.min.js"></script>
-<script src="/js/fireworks.min.js"></script>
-<canvas id="background" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: -1"></canvas>
-<script src="/js/background.min.js"></script>
-<div id="cursor"></div>
-<link rel="stylesheet" href="/css/cursor.min.css">
-<script src="/js/cursor.min.js"></script>
-  <title>可伸缩音乐播放器</title>
-  <link rel="stylesheet" href="/css/style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 <meta name="generator" content="Hexo 7.3.0"></head>
 <body>
-  <div class="audio-player" id="player">
-    <div class="header" id="toggleHeader">
-      <div class="song-info">
-        <i class="fas fa-music music-icon"></i>
-        <span class="song-title">记忆里的花海</span>
-      </div>
-      <i class="fas fa-chevron-up toggle-btn" id="toggleBtn"></i>
-    </div>
-    <div class="controls-container">
-      <div class="playback-controls">
-        <button id="playBtn"><i class="fas fa-play"></i></button>
-        <div class="progress-container">
-          <input type="range" id="progress" value="0" min="0">
-          <span class="time-display" id="time">0:00 / 3:45</span>
-        </div>
-      </div>
-      <div class="volume-control">
-        <i class="fas fa-volume-up volume-icon"></i>
-        <input type="range" id="volume" min="0" max="1" step="0.1" value="1">
-      </div>
-    </div>
-    <audio id="audio" src="/images/music.mp3"></audio>
-  </div>
-  <script src="/js/script.js"></script>
     <div id="layout">
         <transition name="fade">
             <div id="loading" v-show="loading">
                 <div id="loading-circle">
                     <h2>LOADING</h2>
-                    <p>加载过慢请开启缓存 浏览器默认开启 刷新几下再不行就断网重连</p>
+                    <p>加载过慢请开启缓存 浏览器默认开启</p>
                     <img src="/images/loading.gif" />
                 </div>
             </div>
@@ -250,7 +216,7 @@
         
         <span class="tag">
             
-            <a href="/tags/NachoNeko/" style="color: #ff7d73">NachoNeko</a>
+            <a href="/tags/NachoNeko/" style="color: #00a596">NachoNeko</a>
         </span>
         
         <span class="tag">
@@ -260,55 +226,6 @@
         
     </div>
     <a href="/2025/01/17/%E7%94%98%E5%9F%8E%E7%8C%AB%E7%8C%AB/" class="go-post">阅读全文</a>
-</div>
-
-<div class="post">
-    <a href="/2025/03/30/leak/">
-        <h2 class="post-title">星铁漏水区</h2>
-    </a>
-    <div class="category-and-date">
-        
-        <span class="date">
-            <span class="icon">
-                <i class="fa-solid fa-calendar fa-fw"></i>
-            </span>
-            2025/3/30
-        </span>
-        
-        
-        <span class="special">
-            <i class="fa-solid fa-grip-vertical fa-fw"></i>
-        </span>
-        
-    </div>
-    <div class="description">
-        <div class="content" v-pre>
-            
-            <p>铁路漏水区(update：25.6.21)</p>
-
-            
-        </div>
-    </div>
-    <div class="post-tags">
-        
-        <span class="icon">
-            <i class="fa-solid fa-tags fa-fw"></i>
-        </span>
-        
-        
-        
-        <span class="tag">
-            
-            <a href="/tags/leak/" style="color: #00a596">leak</a>
-        </span>
-        
-        <span class="tag">
-            
-            <a href="/tags/HSR/" style="color: #00bcd4">HSR</a>
-        </span>
-        
-    </div>
-    <a href="/2025/03/30/leak/" class="go-post">阅读全文</a>
 </div>
 
 <div class="post">
@@ -349,7 +266,7 @@
         
         <span class="tag">
             
-            <a href="/tags/minecraft/" style="color: #ff7d73">minecraft</a>
+            <a href="/tags/minecraft/" style="color: #00bcd4">minecraft</a>
         </span>
         
     </div>
@@ -388,61 +305,16 @@
         
         <span class="tag">
             
-            <a href="/tags/%E6%B8%B8%E6%88%8F/" style="color: #00bcd4">游戏</a>
+            <a href="/tags/%E6%B8%B8%E6%88%8F/" style="color: #00a596">游戏</a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/HSR/" style="color: #03a9f4">HSR</a>
+            <a href="/tags/HSR/" style="color: #00bcd4">HSR</a>
         </span>
         
     </div>
     <a href="/2025/06/01/3-3%E5%89%A7%E6%83%85/" class="go-post">阅读全文</a>
-</div>
-
-<div class="post">
-    <a href="/2025/05/30/HSRps/">
-        <h2 class="post-title">HSR private server for Android</h2>
-    </a>
-    <div class="category-and-date">
-        
-        <span class="date">
-            <span class="icon">
-                <i class="fa-solid fa-calendar fa-fw"></i>
-            </span>
-            2025/5/30
-        </span>
-        
-        
-    </div>
-    <div class="description">
-        <div class="content" v-pre>
-            
-            <p>HSR3.4安卓走路端</p>
-
-            
-        </div>
-    </div>
-    <div class="post-tags">
-        
-        <span class="icon">
-            <i class="fa-solid fa-tags fa-fw"></i>
-        </span>
-        
-        
-        
-        <span class="tag">
-            
-            <a href="/tags/%E6%B8%B8%E6%88%8F/" style="color: #ff7d73">游戏</a>
-        </span>
-        
-        <span class="tag">
-            
-            <a href="/tags/HSR/" style="color: #ffa2c4">HSR</a>
-        </span>
-        
-    </div>
-    <a href="/2025/05/30/HSRps/" class="go-post">阅读全文</a>
 </div>
 
 <div class="post">
@@ -477,12 +349,12 @@
         
         <span class="tag">
             
-            <a href="/tags/%E6%B8%B8%E6%88%8F/" style="color: #ff7d73">游戏</a>
+            <a href="/tags/%E6%B8%B8%E6%88%8F/" style="color: #03a9f4">游戏</a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/HSR/" style="color: #00a596">HSR</a>
+            <a href="/tags/HSR/" style="color: #ff7d73">HSR</a>
         </span>
         
     </div>
@@ -522,12 +394,12 @@
         
         <span class="tag">
             
-            <a href="/tags/%E6%B8%B8%E6%88%8F/" style="color: #00bcd4">游戏</a>
+            <a href="/tags/%E6%B8%B8%E6%88%8F/" style="color: #03a9f4">游戏</a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/minecraft/" style="color: #03a9f4">minecraft</a>
+            <a href="/tags/minecraft/" style="color: #ff7d73">minecraft</a>
         </span>
         
     </div>
@@ -576,7 +448,7 @@
         
         <span class="tag">
             
-            <a href="/tags/Minecraft/" style="color: #ffa2c4">Minecraft</a>
+            <a href="/tags/Minecraft/" style="color: #03a9f4">Minecraft</a>
         </span>
         
     </div>
@@ -615,17 +487,17 @@
         
         <span class="tag">
             
-            <a href="/tags/%E6%B8%B8%E6%88%8F/" style="color: #03a9f4">游戏</a>
+            <a href="/tags/%E6%B8%B8%E6%88%8F/" style="color: #00a596">游戏</a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/%E7%94%9F%E6%B4%BB/" style="color: #00bcd4">生活</a>
+            <a href="/tags/%E7%94%9F%E6%B4%BB/" style="color: #ffa2c4">生活</a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/Minecraft/" style="color: #00a596">Minecraft</a>
+            <a href="/tags/Minecraft/" style="color: #00bcd4">Minecraft</a>
         </span>
         
     </div>
@@ -662,21 +534,63 @@
     <a href="/2025/02/05/%E8%A2%AB%E5%88%A0%E9%99%A4%E7%9A%84qq%E5%8A%A8%E6%80%81%E8%A1%A5%E6%A1%A3/" class="go-post">阅读全文</a>
 </div>
 
+<div class="post">
+    <a href="/2025/01/17/%E7%BD%91%E6%98%93%E4%BA%91%E9%9F%B3%E4%B9%90%EF%BC%88%E6%9D%9C%E6%AF%94%E5%A4%A7%E5%96%87%E5%8F%AD%EF%BC%89/">
+        <h2 class="post-title">网易云音乐（杜比大喇叭）</h2>
+    </a>
+    <div class="category-and-date">
+        
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2025/1/17
+        </span>
+        
+        
+    </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+            <p>网易云音乐换源插件内置（可以听所有歌）</p>
+
+            
+        </div>
+    </div>
+    <div class="post-tags">
+        
+        <span class="icon">
+            <i class="fa-solid fa-tags fa-fw"></i>
+        </span>
+        
+        
+        
+        <span class="tag">
+            
+            <a href="/tags/%E9%9F%B3%E4%B9%90/" style="color: #ff7d73">音乐</a>
+        </span>
+        
+        <span class="tag">
+            
+            <a href="/tags/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/" style="color: #00a596">实用工具</a>
+        </span>
+        
+        <span class="tag">
+            
+            <a href="/tags/%E6%8F%92%E4%BB%B6/" style="color: #ffa2c4">插件</a>
+        </span>
+        
+    </div>
+    <a href="/2025/01/17/%E7%BD%91%E6%98%93%E4%BA%91%E9%9F%B3%E4%B9%90%EF%BC%88%E6%9D%9C%E6%AF%94%E5%A4%A7%E5%96%87%E5%8F%AD%EF%BC%89/" class="go-post">阅读全文</a>
+</div>
+
 
         <div class="page-current">
     
     <span class="current">1</span>
     
-    <a class="page-num" href="/page/2">
-        2
-    </a>
     
     
-    
-    
-    <a class="page-num" href="/page/2/">
-        <i class="fa-solid fa-caret-right fa-fw"></i>
-    </a>
     
 </div>
 
