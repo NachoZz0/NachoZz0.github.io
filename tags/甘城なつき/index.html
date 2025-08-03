@@ -44,6 +44,57 @@
 
 <link rel="stylesheet" href="/css/main.css" />
 
+    <link href="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/meting@2.0.1/dist/Meting.min.js"></script>
+    <div id="aplayer01"></div>
+<script type="text/javascript">
+    const ap = new APlayer({
+　　　　  //定义容器
+        container: document.getElementById('aplayer01'),
+　　　　 //关于音频的相关参数：
+        fixed: true,
+        mini: true,
+        autoplay: true,
+        theme: '#b7daff',
+        loop: 'all',
+        order: 'random',
+        preload: 'auto',
+        volume: 0.5,
+        mutex: true,
+        listFolded: false,
+        listMaxHeight: 90,
+        lrcType: 3,
+        audio: [
+            {
+            name: '还是分开',//音频名称
+            artist: '张叶蕾',//艺术家
+            url: '/audio/张叶蕾 - 还是分开.mp3',//文件地址
+            cover: '/images/avatar.jpg'//封面地址
+            },
+            { 
+            name: '心墙',//音频名称
+            artist: '林俊杰',//艺术家
+            url: '/audio/林俊杰 - 心墙.mp3',//文件地址
+            cover: '/images/avatar.jpg'//封面地址
+            }
+    ]
+    });
+</script>
+<canvas
+    id="fireworks"
+    style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 32767"
+></canvas>
+<script src="https://s4.zstatic.net/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+<script src="/js/fireworks.min.js"></script>
+<canvas
+    id="background"
+    style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: -1"
+></canvas>
+<script src="/js/background.min.js"></script>
+<div id="cursor"></div>
+<link rel="stylesheet" href="/css/cursor.min.css" />
+<script src="/js/cursor.min.js"></script>
 <meta name="generator" content="Hexo 7.3.0"></head>
 <body>
     <div id="layout">
@@ -157,7 +208,7 @@
         
         
         <span>
-            <a href="/tags/%E6%B8%B8%E6%88%8F/" style="background: #00a596">
+            <a href="/tags/%E6%B8%B8%E6%88%8F/" style="background: #03a9f4">
                 <span class="icon">
                     <i class="fa-solid fa-tags fa-fw"></i>
                 </span>
@@ -168,7 +219,7 @@
         
         
         <span>
-            <a href="/tags/minecraft/" style="background: #ffa2c4">
+            <a href="/tags/minecraft/" style="background: #00a596">
                 <span class="icon">
                     <i class="fa-solid fa-tags fa-fw"></i>
                 </span>
@@ -179,7 +230,7 @@
         
         
         <span>
-            <a href="/tags/NachoNeko/" style="background: #03a9f4">
+            <a href="/tags/NachoNeko/" style="background: #ff7d73">
                 <span class="icon">
                     <i class="fa-solid fa-tags fa-fw"></i>
                 </span>
@@ -203,7 +254,7 @@
         
         
         <span>
-            <a href="/tags/%E7%94%9F%E6%B4%BB/" style="background: #ffa2c4">
+            <a href="/tags/%E7%94%9F%E6%B4%BB/" style="background: #00a596">
                 <span class="icon">
                     <i class="fa-solid fa-tags fa-fw"></i>
                 </span>
@@ -214,7 +265,7 @@
         
         
         <span>
-            <a href="/tags/Minecraft/" style="background: #03a9f4">
+            <a href="/tags/Minecraft/" style="background: #00bcd4">
                 <span class="icon">
                     <i class="fa-solid fa-tags fa-fw"></i>
                 </span>
@@ -225,7 +276,7 @@
         
         
         <span>
-            <a href="/tags/%E9%9F%B3%E4%B9%90/" style="background: #00bcd4">
+            <a href="/tags/%E9%9F%B3%E4%B9%90/" style="background: #ff7d73">
                 <span class="icon">
                     <i class="fa-solid fa-tags fa-fw"></i>
                 </span>
@@ -236,7 +287,7 @@
         
         
         <span>
-            <a href="/tags/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/" style="background: #ffa2c4">
+            <a href="/tags/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/" style="background: #00a596">
                 <span class="icon">
                     <i class="fa-solid fa-tags fa-fw"></i>
                 </span>
@@ -247,7 +298,7 @@
         
         
         <span>
-            <a href="/tags/%E6%8F%92%E4%BB%B6/" style="background: #ff7d73">
+            <a href="/tags/%E6%8F%92%E4%BB%B6/" style="background: #00bcd4">
                 <span class="icon">
                     <i class="fa-solid fa-tags fa-fw"></i>
                 </span>
@@ -263,6 +314,17 @@
                     <i class="fa-solid fa-tags fa-fw"></i>
                 </span>
                 HSR
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/%E6%95%B4%E6%B4%BB/" style="background: #ff7d73">
+                <span class="icon">
+                    <i class="fa-solid fa-tags fa-fw"></i>
+                </span>
+                整活
             </a>
         </span>
         
@@ -287,14 +349,14 @@
                     
                     <span class="tag">
                         
-                        <a href="/tags/NachoNeko/" style="color: #ffa2c4">
+                        <a href="/tags/NachoNeko/" style="color: #00a596">
                             NachoNeko
                         </a>
                     </span>
                     
                     <span class="tag">
                         
-                        <a href="/tags/%E7%94%98%E5%9F%8E%E3%81%AA%E3%81%A4%E3%81%8D/" style="color: #00a596">
+                        <a href="/tags/%E7%94%98%E5%9F%8E%E3%81%AA%E3%81%A4%E3%81%8D/" style="color: #03a9f4">
                             甘城なつき
                         </a>
                     </span>
