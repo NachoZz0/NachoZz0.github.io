@@ -44,6 +44,8 @@
 
 
 
+<script src="https://s4.zstatic.net/ajax/libs/twikoo/1.6.31/twikoo.all.min.js"></script>
+
 
 
 <link rel="stylesheet" href="/css/main.css" />
@@ -217,7 +219,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/%E6%95%99%E7%A8%8B/" style="color: #03a9f4">
+                <a href="/tags/%E6%95%99%E7%A8%8B/" style="color: #ff7d73">
                     教程
                 </a>
             </span>
@@ -239,6 +241,10 @@
     </div>
     
     
+    
+    <div id="comment">
+        <div id="twikoo-container"></div>
+    </div>
     
     
 </div>
@@ -284,14 +290,24 @@
     data-reactions-enabled="1"
     data-emit-metadata="0"
     data-input-position="bottom"
-    data-theme="noborder_light"
-    data-lang="zh-cn"
+    data-theme="preferred_color_scheme"
+    data-lang="zh-CN"
     crossorigin
     async
 ></script>
 
 
 
+
+<script>
+    twikoo.init({
+        el: "#twikoo-container",
+        envId: "",
+        region: "",
+        path: location.pathname,
+        lang: "zh_cn",
+    })
+</script>
 
 
     

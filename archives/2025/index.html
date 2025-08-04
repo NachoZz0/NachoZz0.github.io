@@ -40,6 +40,8 @@
 
 
 
+<script src="/js/lib/search.js"></script>
+
 
 
 <link rel="stylesheet" href="/css/main.css" />
@@ -188,6 +190,8 @@
             
 <div id="archives">
     
+    <input id="search-bar" class="input" placeholder="搜索" v-model="rawSearch" />
+    
     <div id="timeline-wrap" ref="timeline">
         
         <div class="timeline" data-title="网易云音乐（杜比大喇叭）">
@@ -208,21 +212,21 @@
                         
                         <span class="tag">
                             
-                            <a href="/tags/%E9%9F%B3%E4%B9%90/" style="color: #ff7d73">
+                            <a href="/tags/%E9%9F%B3%E4%B9%90/" style="color: #03a9f4">
                                 音乐
                             </a>
                         </span>
                         
                         <span class="tag">
                             
-                            <a href="/tags/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/" style="color: #03a9f4">
+                            <a href="/tags/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/" style="color: #00bcd4">
                                 实用工具
                             </a>
                         </span>
                         
                         <span class="tag">
                             
-                            <a href="/tags/%E6%8F%92%E4%BB%B6/" style="color: #ff7d73">
+                            <a href="/tags/%E6%8F%92%E4%BB%B6/" style="color: #00a596">
                                 插件
                             </a>
                         </span>
@@ -301,21 +305,21 @@
                         
                         <span class="tag">
                             
-                            <a href="/tags/%E6%B8%B8%E6%88%8F/" style="color: #03a9f4">
+                            <a href="/tags/%E6%B8%B8%E6%88%8F/" style="color: #00a596">
                                 游戏
                             </a>
                         </span>
                         
                         <span class="tag">
                             
-                            <a href="/tags/%E7%94%9F%E6%B4%BB/" style="color: #ffa2c4">
+                            <a href="/tags/%E7%94%9F%E6%B4%BB/" style="color: #03a9f4">
                                 生活
                             </a>
                         </span>
                         
                         <span class="tag">
                             
-                            <a href="/tags/Minecraft/" style="color: #03a9f4">
+                            <a href="/tags/Minecraft/" style="color: #ff7d73">
                                 Minecraft
                             </a>
                         </span>
@@ -358,7 +362,7 @@
                         
                         <span class="tag">
                             
-                            <a href="/tags/Minecraft/" style="color: #03a9f4">
+                            <a href="/tags/Minecraft/" style="color: #00bcd4">
                                 Minecraft
                             </a>
                         </span>
@@ -394,7 +398,7 @@
                         
                         <span class="tag">
                             
-                            <a href="/tags/minecraft/" style="color: #ff7d73">
+                            <a href="/tags/minecraft/" style="color: #03a9f4">
                                 minecraft
                             </a>
                         </span>
@@ -411,42 +415,6 @@
                 <div class="item-time">2025/4/13</div>
                 <a href="/2025/04/13/21%E9%81%90%E8%9D%B6%EF%BC%8C%E5%89%8D%E6%9D%A5%E8%BF%98%E6%84%BF/">
                     <h3>21遐蝶已出，前来还愿</h3>
-                </a>
-                <div class="info">
-                    
-                    
-                    <span class="tags">
-                        <span class="icon">
-                            <i class="fa-solid fa-tags fa-fw"></i>
-                        </span>
-                        
-                        
-                        <span class="tag">
-                            
-                            <a href="/tags/%E6%B8%B8%E6%88%8F/" style="color: #ff7d73">
-                                游戏
-                            </a>
-                        </span>
-                        
-                        <span class="tag">
-                            
-                            <a href="/tags/HSR/" style="color: #00bcd4">
-                                HSR
-                            </a>
-                        </span>
-                        
-                    </span>
-                    
-                </div>
-            </div>
-        </div>
-        
-        <div class="timeline" data-title="3.3剧情">
-            <div class="timeline-tail"></div>
-            <div class="timeline-content">
-                <div class="item-time">2025/6/1</div>
-                <a href="/2025/06/01/3-3%E5%89%A7%E6%83%85/">
-                    <h3>3.3剧情</h3>
                 </a>
                 <div class="info">
                     
@@ -477,6 +445,42 @@
             </div>
         </div>
         
+        <div class="timeline" data-title="3.3剧情">
+            <div class="timeline-tail"></div>
+            <div class="timeline-content">
+                <div class="item-time">2025/6/1</div>
+                <a href="/2025/06/01/3-3%E5%89%A7%E6%83%85/">
+                    <h3>3.3剧情</h3>
+                </a>
+                <div class="info">
+                    
+                    
+                    <span class="tags">
+                        <span class="icon">
+                            <i class="fa-solid fa-tags fa-fw"></i>
+                        </span>
+                        
+                        
+                        <span class="tag">
+                            
+                            <a href="/tags/%E6%B8%B8%E6%88%8F/" style="color: #00bcd4">
+                                游戏
+                            </a>
+                        </span>
+                        
+                        <span class="tag">
+                            
+                            <a href="/tags/HSR/" style="color: #ffa2c4">
+                                HSR
+                            </a>
+                        </span>
+                        
+                    </span>
+                    
+                </div>
+            </div>
+        </div>
+        
         <div class="timeline" data-title="完结撒花">
             <div class="timeline-tail"></div>
             <div class="timeline-content">
@@ -495,14 +499,14 @@
                         
                         <span class="tag">
                             
-                            <a href="/tags/%E6%B8%B8%E6%88%8F/" style="color: #03a9f4">
+                            <a href="/tags/%E6%B8%B8%E6%88%8F/" style="color: #ff7d73">
                                 游戏
                             </a>
                         </span>
                         
                         <span class="tag">
                             
-                            <a href="/tags/minecraft/" style="color: #ff7d73">
+                            <a href="/tags/minecraft/" style="color: #00a596">
                                 minecraft
                             </a>
                         </span>
@@ -531,15 +535,51 @@
                         
                         <span class="tag">
                             
-                            <a href="/tags/%E7%94%9F%E6%B4%BB/" style="color: #03a9f4">
+                            <a href="/tags/%E7%94%9F%E6%B4%BB/" style="color: #ff7d73">
                                 生活
                             </a>
                         </span>
                         
                         <span class="tag">
                             
-                            <a href="/tags/%E6%95%B4%E6%B4%BB/" style="color: #ff7d73">
+                            <a href="/tags/%E6%95%B4%E6%B4%BB/" style="color: #00bcd4">
                                 整活
+                            </a>
+                        </span>
+                        
+                    </span>
+                    
+                </div>
+            </div>
+        </div>
+        
+        <div class="timeline" data-title="。">
+            <div class="timeline-tail"></div>
+            <div class="timeline-content">
+                <div class="item-time">2025/8/3</div>
+                <a href="/2025/08/03/nosay/">
+                    <h3>。</h3>
+                </a>
+                <div class="info">
+                    
+                    
+                    <span class="tags">
+                        <span class="icon">
+                            <i class="fa-solid fa-tags fa-fw"></i>
+                        </span>
+                        
+                        
+                        <span class="tag">
+                            
+                            <a href="/tags/hsr/" style="color: #00bcd4">
+                                hsr
+                            </a>
+                        </span>
+                        
+                        <span class="tag">
+                            
+                            <a href="/tags/%E6%B8%B8%E6%88%8F/" style="color: #03a9f4">
+                                游戏
                             </a>
                         </span>
                         
@@ -567,14 +607,14 @@
                         
                         <span class="tag">
                             
-                            <a href="/tags/minecraft/" style="color: #00bcd4">
+                            <a href="/tags/minecraft/" style="color: #00a596">
                                 minecraft
                             </a>
                         </span>
                         
                         <span class="tag">
                             
-                            <a href="/tags/%E6%95%99%E7%A8%8B/" style="color: #ff7d73">
+                            <a href="/tags/%E6%95%99%E7%A8%8B/" style="color: #03a9f4">
                                 教程
                             </a>
                         </span>
