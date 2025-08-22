@@ -11,7 +11,7 @@
       const duration = 4 + Math.random() * 6; // 4-10秒
       const delay = Math.random() * 1.5; // 0-1.5秒延迟
       
-      // 控制蛋糕大小 (30px-80px之间)
+      // 控制蛋糕大小
       const minSize = 30;
       const maxSize = 50;
       const size = minSize + Math.random() * (maxSize - minSize);
