@@ -87,6 +87,7 @@
       // 自动开始动画
       startCakeAnimation();
     });
+
     // 窗口大小变化时重新调整
     window.addEventListener('resize', () => {
       if (cakeInterval) {
@@ -95,3 +96,4 @@
       }
     });
 }
+
