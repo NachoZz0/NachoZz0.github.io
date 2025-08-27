@@ -1,0 +1,28 @@
+/* 蛋糕基础样式 - 固定定位 */
+    .cake {
+      position: fixed; /* 使用 fixed 定位不随页面滚动 */
+      top: -100px; /* 从屏幕上方开始 */
+      width: 40px; /* 默认大小 */
+      height: 40px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      z-index: 9999;
+      pointer-events: none; /* 防止阻挡点击操作 */
+      will-change: transform; /* 优化动画性能 */
+    }
+    
+    /* 下落动画 */
+    @keyframes fall {
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+      }
+      80% {
+        opacity: 0.8;
+      }
+      100% {
+        transform: translateY(calc(100vh + 100px)) rotate(360deg);
+        opacity: 0;
+      }
+    }
