@@ -70,6 +70,14 @@
 <link rel="stylesheet" href="/css/cursor.min.css" />
 <script src="/js/cursor.min.js">//鼠标跟随
 </script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const today = new Date();
+  if (today.getMonth() === 7 && today.getDate() === 27) { 
+    alert("今天我生日（大声）");
+  }
+});
+</script>
 <canvas
     id="fireworks"
     style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 32767"
