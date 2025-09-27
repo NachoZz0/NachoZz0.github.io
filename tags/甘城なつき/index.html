@@ -5,11 +5,12 @@
     <meta charset="utf-8" />
     <title>Tags: 甘城なつき | NachoZzの小窝</title>
     <meta name="author" content="NachoZz" />
-    <meta name="description" content=" " />
+    <meta name="description" content="  " />
     <meta name="keywords" content="" />
     <meta
         name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+    />
     <link rel="icon" href="/images/avatar.jpg" />
     <link rel="preconnect" href="https://s4.zstatic.net" />
 <script src="https://s4.zstatic.net/ajax/libs/vue/3.3.7/vue.global.prod.min.js"></script>
@@ -43,49 +44,53 @@
 
 <link rel="stylesheet" href="/css/main.css" />
 
-    <canvas id="fireworks" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 32767"></canvas>
-<script src="https://cdn.staticfile.org/animejs/3.2.1/anime.min.js"></script>
+    <link href="/css/cssv3.css" rel="stylesheet">
+    <script src="/js/jsv2.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/meting@2.0.1/dist/Meting.min.js"></script>
+    
+    <meting-js
+	    server="netease"
+	    type="playlist"
+	    id="14117428052"
+        fixed="true"
+        mini="true"
+        preload="auto"
+        order="random"
+        loop="all"
+        volume="0.5"
+        autoplay="true"
+        
+        >
+    </meting-js>
+
+<div id="cursor"> 
+</div> 
+<link rel="stylesheet" href="/css/cursor.min.css" />
+<script src="/js/cursor.min.js">//鼠标跟随
+</script>
+<canvas
+    id="fireworks"
+    style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 32767"
+></canvas>
+<script src="https://s4.zstatic.net/ajax/libs/animejs/3.2.1/anime.min.js">//点击特效</script>
 <script src="/js/fireworks.min.js"></script>
-<canvas id="background" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: -1"></canvas>
-<script src="/js/background.min.js"></script>
-<div id="cursor"></div>
-<link rel="stylesheet" href="/css/cursor.min.css">
-<script src="/js/cursor.min.js"></script>
-  <title>可伸缩音乐播放器</title>
-  <link rel="stylesheet" href="/css/style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<canvas
+    id="background"
+    style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: -1"
+></canvas>
+<script src="/js/background.min.js">//背景</script>
+</div> 
+<link rel="stylesheet" href="/css/cake.css" />
+<script src="/js/cake.js">
+</script>
 <meta name="generator" content="Hexo 7.3.0"></head>
 <body>
-  <div class="audio-player" id="player">
-    <div class="header" id="toggleHeader">
-      <div class="song-info">
-        <i class="fas fa-music music-icon"></i>
-        <span class="song-title">记忆里的花海</span>
-      </div>
-      <i class="fas fa-chevron-up toggle-btn" id="toggleBtn"></i>
-    </div>
-    <div class="controls-container">
-      <div class="playback-controls">
-        <button id="playBtn"><i class="fas fa-play"></i></button>
-        <div class="progress-container">
-          <input type="range" id="progress" value="0" min="0">
-          <span class="time-display" id="time">0:00 / 3:45</span>
-        </div>
-      </div>
-      <div class="volume-control">
-        <i class="fas fa-volume-up volume-icon"></i>
-        <input type="range" id="volume" min="0" max="1" step="0.1" value="1">
-      </div>
-    </div>
-    <audio id="audio" src="/images/music.mp3"></audio>
-  </div>
-  <script src="/js/script.js"></script>
     <div id="layout">
         <transition name="fade">
             <div id="loading" v-show="loading">
                 <div id="loading-circle">
                     <h2>LOADING</h2>
-                    <p>加载过慢请开启缓存 浏览器默认开启 刷新几下再不行就断网重连</p>
+                    <p>加载过慢请开启缓存 浏览器默认开启</p>
                     <img src="/images/loading.gif" />
                 </div>
             </div>
@@ -191,7 +196,18 @@
         
         
         <span>
-            <a href="/tags/%E6%B8%B8%E6%88%8F/" style="background: #ffa2c4">
+            <a href="/tags/hsr/" style="background: #ffa2c4">
+                <span class="icon">
+                    <i class="fa-solid fa-tags fa-fw"></i>
+                </span>
+                hsr
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/%E6%B8%B8%E6%88%8F/" style="background: #03a9f4">
                 <span class="icon">
                     <i class="fa-solid fa-tags fa-fw"></i>
                 </span>
@@ -202,18 +218,7 @@
         
         
         <span>
-            <a href="/tags/leak/" style="background: #03a9f4">
-                <span class="icon">
-                    <i class="fa-solid fa-tags fa-fw"></i>
-                </span>
-                leak
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/tags/minecraft/" style="background: #ff7d73">
+            <a href="/tags/minecraft/" style="background: #00a596">
                 <span class="icon">
                     <i class="fa-solid fa-tags fa-fw"></i>
                 </span>
@@ -224,7 +229,7 @@
         
         
         <span>
-            <a href="/tags/NachoNeko/" style="background: #00a596">
+            <a href="/tags/NachoNeko/" style="background: #ff7d73">
                 <span class="icon">
                     <i class="fa-solid fa-tags fa-fw"></i>
                 </span>
@@ -248,7 +253,7 @@
         
         
         <span>
-            <a href="/tags/%E7%94%9F%E6%B4%BB/" style="background: #03a9f4">
+            <a href="/tags/%E7%94%9F%E6%B4%BB/" style="background: #ff7d73">
                 <span class="icon">
                     <i class="fa-solid fa-tags fa-fw"></i>
                 </span>
@@ -259,7 +264,7 @@
         
         
         <span>
-            <a href="/tags/Minecraft/" style="background: #ff7d73">
+            <a href="/tags/Minecraft/" style="background: #03a9f4">
                 <span class="icon">
                     <i class="fa-solid fa-tags fa-fw"></i>
                 </span>
@@ -270,7 +275,7 @@
         
         
         <span>
-            <a href="/tags/%E9%9F%B3%E4%B9%90/" style="background: #00a596">
+            <a href="/tags/%E9%9F%B3%E4%B9%90/" style="background: #00bcd4">
                 <span class="icon">
                     <i class="fa-solid fa-tags fa-fw"></i>
                 </span>
@@ -281,7 +286,7 @@
         
         
         <span>
-            <a href="/tags/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/" style="background: #00bcd4">
+            <a href="/tags/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/" style="background: #ffa2c4">
                 <span class="icon">
                     <i class="fa-solid fa-tags fa-fw"></i>
                 </span>
@@ -292,7 +297,7 @@
         
         
         <span>
-            <a href="/tags/%E6%8F%92%E4%BB%B6/" style="background: #03a9f4">
+            <a href="/tags/%E6%8F%92%E4%BB%B6/" style="background: #00bcd4">
                 <span class="icon">
                     <i class="fa-solid fa-tags fa-fw"></i>
                 </span>
@@ -303,11 +308,55 @@
         
         
         <span>
-            <a href="/tags/HSR/" style="background: #00a596">
+            <a href="/tags/HSR/" style="background: #03a9f4">
                 <span class="icon">
                     <i class="fa-solid fa-tags fa-fw"></i>
                 </span>
                 HSR
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/%E6%95%B4%E6%B4%BB/" style="background: #00bcd4">
+                <span class="icon">
+                    <i class="fa-solid fa-tags fa-fw"></i>
+                </span>
+                整活
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/%E6%95%99%E7%A8%8B/" style="background: #ffa2c4">
+                <span class="icon">
+                    <i class="fa-solid fa-tags fa-fw"></i>
+                </span>
+                教程
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/%E4%B8%BB%E9%A2%98/" style="background: #03a9f4">
+                <span class="icon">
+                    <i class="fa-solid fa-tags fa-fw"></i>
+                </span>
+                主题
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/%E5%B0%8F%E7%B1%B3%E6%89%8B%E7%8E%AF/" style="background: #00a596">
+                <span class="icon">
+                    <i class="fa-solid fa-tags fa-fw"></i>
+                </span>
+                小米手环
             </a>
         </span>
         
@@ -339,7 +388,7 @@
                     
                     <span class="tag">
                         
-                        <a href="/tags/%E7%94%98%E5%9F%8E%E3%81%AA%E3%81%A4%E3%81%8D/" style="color: #00bcd4">
+                        <a href="/tags/%E7%94%98%E5%9F%8E%E3%81%AA%E3%81%A4%E3%81%8D/" style="color: #00a596">
                             甘城なつき
                         </a>
                     </span>

@@ -1,0 +1,25 @@
+#cursor{position:fixed;width:16px;height:16px;border-radius:8px;background:#000;opacity:0;transition:opacity .2s,-webkit-transform .2s;transition:opacity .2s,transform .2s;transition:opacity .2s,transform .2s,-webkit-transform .2s;z-index:32767;pointer-events:none}#cursor.visible{opacity:.25}#cursor.hover{opacity:.1;-webkit-transform:scale(2.5);transform:scale(2.5)}#cursor.active{opacity:.5;-webkit-transform:scale(.5);transform:scale(.5)}
+body {
+  cursor: none;
+}
+.star {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: radial-gradient(#fff,#ff0);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: starMove 1s linear forwards;
+    box-shadow: 0 0 10px #ff0,0 0 20px #ff0,0 0 30px #ff0
+}
+@keyframes starMove {
+    0% {
+        transform: scale(1) translate(0,0);
+        opacity: 1
+    }
+
+    100% {
+        transform: scale(0.2) translate(var(--tx),var(--ty));
+        opacity: 0
+    }
+}
