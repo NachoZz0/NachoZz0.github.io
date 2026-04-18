@@ -1,8 +1,8 @@
 class MouseSpark {
     constructor(opts = {}) {
         this.color = opts.color || '45,175,255'; 
-        this.scale = opts.scale || 1.5;
-        this.opacity = opts.opacity || 1.0;
+        this.scale = opts.scale || 0.8;
+        this.opacity = opts.opacity || 1.5;
         this.speed = opts.speed || 1.0;
         this.maxTrail = opts.maxTrail || 16;
 
@@ -15,7 +15,7 @@ class MouseSpark {
         this.isDown = false;
         this.lastPos = null;
         this.baseFrameMs = 1000 / 60;
-        this.maxDeltaMs = 100;
+        this.maxDeltaMs = 200;
         this.lastFrameTime = performance.now();
 
         this.initCanvas();
