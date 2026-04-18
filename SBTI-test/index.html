@@ -21,6 +21,7 @@
     rel="stylesheet"
     href="https://fonts.googleapis.cn/css2?family=Fira+Code:wght@400;500;600;700&family=Lexend:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;600;700;800;900&display=swap"
 />
+<link rel="stylesheet" href="/css/main.css" />
 <script> const mixins = {}; </script>
   <style>
     :root {
@@ -34,6 +35,7 @@
       --accent-strong: #4d6a53;
       --shadow: 0 16px 40px rgba(47, 73, 55, 0.08);
       --radius: 22px;
+      --page-bg-image: url("https://pic1.imgdb.cn/item/6815596558cb8da5c8d7156a.png");
     }
 
     * { box-sizing: border-box; }
@@ -44,12 +46,56 @@
         radial-gradient(circle at top left, #f8fff8 0, #f6faf6 36%, #f2f7f3 100%);
       color: var(--text);
       min-height: 100vh;
+      position: relative;
+      isolation: isolate;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      background-image:
+        linear-gradient(rgba(246, 250, 246, 0.84), rgba(242, 247, 243, 0.88)),
+        var(--page-bg-image);
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      pointer-events: none;
     }
 
     .shell {
       max-width: 980px;
       margin: 0 auto;
-      padding: 24px 16px 56px;
+      padding: 88px 16px 56px;
+    }
+
+    #menu .title span,
+    #menu a span {
+      font-family: "Lexend", "Noto Sans SC", sans-serif;
+    }
+
+    #menu {
+      background: rgba(255, 255, 255, 0.14);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      transition: background .25s ease, top .25s ease, box-shadow .25s ease;
+    }
+
+    #menu #desktop-menu .title,
+    #menu #desktop-menu a,
+    #menu #mobile-menu .title,
+    #menu #mobile-menu .items a {
+      color: rgba(30, 42, 34, 0.92);
+    }
+
+    #menu.is-solid {
+      background: rgba(255, 255, 255, 0.82);
+      box-shadow: 0 10px 30px rgba(47, 73, 55, 0.12);
+    }
+
+    #menu.hidden {
+      top: -56px;
     }
 
     .card {
@@ -723,6 +769,52 @@
 </script>
 </head>
 <body>
+  <div id="menu">
+    <nav id="desktop-menu">
+      <a class="title" href="/">
+        <span>NACHOZZ</span>
+      </a>
+      <a href="/">
+        <i class="fa-solid fa-house fa-fw"></i>
+        <span>&ensp;Home</span>
+      </a>
+      <a href="/about">
+        <i class="fa-solid fa-id-card fa-fw"></i>
+        <span>&ensp;About</span>
+      </a>
+      <a href="/archives">
+        <i class="fa-solid fa-box-archive fa-fw"></i>
+        <span>&ensp;Archives</span>
+      </a>
+      <a href="/categories">
+        <i class="fa-solid fa-bookmark fa-fw"></i>
+        <span>&ensp;Categories</span>
+      </a>
+      <a href="/tags">
+        <i class="fa-solid fa-tags fa-fw"></i>
+        <span>&ensp;Tags</span>
+      </a>
+      <a href="/SBTI-test">
+        <i class="fa-solid fa-flask fa-fw"></i>
+        <span>&ensp;SBTITEST</span>
+      </a>
+    </nav>
+    <nav id="mobile-menu">
+      <div class="title" id="mobileMenuToggle" role="button" tabindex="0" aria-expanded="false" aria-controls="mobileMenuItems">
+        <i class="fa-solid fa-bars fa-fw"></i>
+        <span>&emsp;NACHOZZ</span>
+      </div>
+      <div class="items" id="mobileMenuItems" style="display: none;">
+        <a href="/"><div class="item"><div style="min-width: 20px; max-width: 50px; width: 10%"><i class="fa-solid fa-house fa-fw"></i></div><div style="min-width: 100px; max-width: 150%; width: 20%">Home</div></div></a>
+        <a href="/about"><div class="item"><div style="min-width: 20px; max-width: 50px; width: 10%"><i class="fa-solid fa-id-card fa-fw"></i></div><div style="min-width: 100px; max-width: 150%; width: 20%">About</div></div></a>
+        <a href="/archives"><div class="item"><div style="min-width: 20px; max-width: 50px; width: 10%"><i class="fa-solid fa-box-archive fa-fw"></i></div><div style="min-width: 100px; max-width: 150%; width: 20%">Archives</div></div></a>
+        <a href="/categories"><div class="item"><div style="min-width: 20px; max-width: 50px; width: 10%"><i class="fa-solid fa-bookmark fa-fw"></i></div><div style="min-width: 100px; max-width: 150%; width: 20%">Categories</div></div></a>
+        <a href="/tags"><div class="item"><div style="min-width: 20px; max-width: 50px; width: 10%"><i class="fa-solid fa-tags fa-fw"></i></div><div style="min-width: 100px; max-width: 150%; width: 20%">Tags</div></div></a>
+        <a href="/SBTI-test"><div class="item"><div style="min-width: 20px; max-width: 50px; width: 10%"><i class="fa-solid fa-flask fa-fw"></i></div><div style="min-width: 100px; max-width: 150%; width: 20%">SBTITEST</div></div></a>
+      </div>
+    </nav>
+  </div>
+  <div id="menu-curtain" style="display: none;"></div>
   <div class="shell">
     <section id="intro" class="screen active">
       <div class="hero card hero-minimal">
@@ -733,13 +825,11 @@
         <div style="padding-top: 2rem; display: flex; flex-direction: column;">
           <span>
             原作者：
-            <a href="https://space.bilibili.com/417038183">B站@蛆肉儿串儿</a>
+            <a href="https://space.bilibili.com/417038183" target="_blank">B站@蛆肉儿串儿</a>
           </span>
           <span>
-            托管：Netlify (免费)
-          </span>
-          <span>
-            域名：netlify (免费)
+            作者已更新B站官方版本：
+            <a href="https://b23.tv/9MfbxHA" target="_blank">B站官方版本</a> 
           </span>
           <span>
             镜像：
@@ -749,11 +839,7 @@
           <summary style="margin-top: 1rem; font-size: 0.75rem; color: gray; cursor: pointer;">关于本镜像</summary>
           <div style="color: gray; padding-top: 0.5rem; font-size: 0.75rem;">
             <div>
-              原作者并未开源，但仅因网页自身即为全部源码(本镜像是我修改过的)，出于存档目的，你可以在
-              <a href="https://github.com/UnluckyNinja/SBTI-test" rel="noopener" target="_blank">
-                此处
-              </a>
-              查看。
+             作者现已在B站发布官方版本，此镜像将不再更新。
             </div>
           </div>
           <div style="margin: 1rem; font-size:0.5rem; color: #80808080">
@@ -1797,6 +1883,66 @@
     document.getElementById('submitBtn').addEventListener('click', renderResult);
     document.getElementById('restartBtn').addEventListener('click', () => startTest(false));
     document.getElementById('toTopBtn').addEventListener('click', () => showScreen('intro'));
+
+    const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+    const mobileMenuItems = document.getElementById('mobileMenuItems');
+    const menuCurtain = document.getElementById('menu-curtain');
+    let mobileMenuOpen = false;
+    let lastScrollY = window.scrollY;
+
+    function setMobileMenu(open) {
+      mobileMenuOpen = open;
+      mobileMenuItems.style.display = open ? 'block' : 'none';
+      menuCurtain.style.display = open ? 'block' : 'none';
+      mobileMenuToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    }
+
+    function syncMenuState() {
+      const currentScrollY = window.scrollY;
+      const scrollingDown = currentScrollY > lastScrollY;
+      const shouldSolid = currentScrollY > 24 || mobileMenuOpen;
+      const shouldHide = scrollingDown && currentScrollY > 90 && !mobileMenuOpen;
+
+      const menu = document.getElementById('menu');
+      menu.classList.toggle('is-solid', shouldSolid);
+      menu.classList.toggle('hidden', shouldHide);
+
+      lastScrollY = currentScrollY;
+    }
+
+    mobileMenuToggle.addEventListener('click', () => {
+      setMobileMenu(!mobileMenuOpen);
+      syncMenuState();
+    });
+
+    mobileMenuToggle.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        setMobileMenu(!mobileMenuOpen);
+        syncMenuState();
+      }
+    });
+
+    menuCurtain.addEventListener('click', () => {
+      setMobileMenu(false);
+      syncMenuState();
+    });
+    mobileMenuItems.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        setMobileMenu(false);
+        syncMenuState();
+      });
+    });
+
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 768 && mobileMenuOpen) {
+        setMobileMenu(false);
+      }
+      syncMenuState();
+    });
+
+    window.addEventListener('scroll', syncMenuState, { passive: true });
+    syncMenuState();
   </script>
 
 </body>

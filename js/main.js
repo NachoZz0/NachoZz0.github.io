@@ -17,6 +17,7 @@ const app = Vue.createApp({
     },
     mounted() {
         window.addEventListener("scroll", this.handleScroll, true);
+        this.handleScroll();
         this.render();
     },
     methods: {
@@ -25,17 +26,24 @@ const app = Vue.createApp({
         },
         handleScroll() {
             let wrap = this.$refs.homePostsWrap;
-            let newScrollTop = document.documentElement.scrollTop;
-            if (this.scrollTop < newScrollTop) {
+            let newScrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+            let scrollingDown = newScrollTop > this.scrollTop;
+
+            if (scrollingDown && newScrollTop > 90) {
                 this.hiddenMenu = true;
                 this.showMenuItems = false;
-            } else this.hiddenMenu = false;
+            } else {
+                this.hiddenMenu = false;
+            }
+
             if (wrap) {
-                if (newScrollTop <= window.innerHeight - 100) this.menuColor = true;
-                else this.menuColor = false;
+                this.menuColor = newScrollTop <= window.innerHeight - 100;
                 if (newScrollTop <= 400) wrap.style.top = "-" + newScrollTop / 5 + "px";
                 else wrap.style.top = "-80px";
+            } else {
+                this.menuColor = false;
             }
+
             this.scrollTop = newScrollTop;
         },
     },
