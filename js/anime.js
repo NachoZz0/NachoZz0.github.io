@@ -28,15 +28,23 @@ class MouseSpark {
     }
 
     initCanvas() {
-        // 自动查找或创建 canvas
         this.c = document.getElementById("sparkCanvas");
         if (!this.c) {
-            this.c = document.createElement('canvas');
+            this.c = document.createElement("canvas");
             this.c.id = "sparkCanvas";
             document.body.appendChild(this.c);
-            // 设置默认样式
-            this.c.style.cssText = "position:fixed;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:9999;";
         }
+
+        Object.assign(this.c.style, {
+            position: "fixed",
+            left: "0",
+            top: "0",
+            width: "100vw",
+            height: "100vh",
+            pointerEvents: "none",
+            zIndex: "32766"
+        });
+
         this.ctx = this.c.getContext("2d");
         this.resize();
         window.addEventListener("resize", () => this.resize());
@@ -91,6 +99,7 @@ class MouseSpark {
     }
 
     boom(x, y) {
+        // 优化：使用对象池
         let wave;
         if (this.wavePool.length > 0) {
             wave = this.wavePool.pop();
@@ -157,15 +166,33 @@ class MouseSpark {
 
         if (this.waves.length > 0 || this.sparks.length > 0 || this.trail.length > 0) {
             this.ctx.clearRect(0, 0, this.c.width, this.c.height);
+            // 优化：减少全局合成模式的使用
             this.ctx.globalCompositeOperation = "lighter";
 
             for (let i = this.trail.length - 1; i >= 0; i--) {
                 let t = this.trail[i];
-                t.life -= (window.effectiveAlwaysTrail ? 0.085 : (this.isDown ? 0.085 : 0.18)) * frameScale;
+                if (window.effectiveAlwaysTrail) {
+                    t.life -= 0.085 * frameScale;
+                } else {
+                    t.life -= (this.isDown ? 0.085 : 0.18) * frameScale;
+                }
                 if (t.life <= 0) this.trail.splice(i, 1);
             }
 
             if (this.trail.length > 1) {
+                // this.ctx.beginPath();
+                // this.ctx.moveTo(this.trail[0].x, this.trail[0].y);
+                // for (let i = 1; i < this.trail.length; i++) {
+                //     this.ctx.lineTo(this.trail[i].x, this.trail[i].y);
+                // }
+                // this.ctx.lineWidth = 8.0;
+
+
+                // this.ctx.strokeStyle = `rgba(${this.color},${this.alpha(0.35)})`;
+                // this.ctx.stroke();
+                
+
+                // =============新增的屎===============
                 this.ctx.beginPath();
                 this.ctx.moveTo(this.trail[0].x, this.trail[0].y);
                 for (let i = 1; i < this.trail.length; i++) {
@@ -184,9 +211,13 @@ class MouseSpark {
 
                 this.ctx.shadowColor = `rgba(${this.color}, 0.6)`; 
                 this.ctx.shadowBlur = 3;
+                this.ctx.shadowOffsetX = 0;
+                this.ctx.shadowOffsetY = 0;
+
                 this.ctx.strokeStyle = gradient;
                 this.ctx.stroke();
                 this.ctx.shadowColor = 'transparent';
+
             }
 
             for (let i = this.waves.length - 1; i >= 0; i--) {
@@ -200,6 +231,7 @@ class MouseSpark {
                     this.ctx.beginPath();
                     this.ctx.arc(w.x, w.y, w.r, 0, Math.PI * 2);
                     this.ctx.fillStyle = `rgba(${this.color},${this.alpha(alpha)})`;
+                    // 优化：减少阴影效果
                     this.ctx.fill();
                 }
                 
@@ -215,9 +247,11 @@ class MouseSpark {
                     this.ctx.arc(w.x, w.y, w.r + 3 * this.scale, start, start + len);
                     this.ctx.lineWidth = 3.7;
                     this.ctx.strokeStyle = `rgba(245,248,252,${this.alpha(1 - rProg)})`;
+                    // 减少阴影效果
                     this.ctx.stroke();
                 });
                 if (progress >= 1 && rProg >= 1) {
+                    // 回收对象到对象池
                     this.wavePool.push(this.waves[i]);
                     this.waves.splice(i, 1);
                 }
@@ -254,23 +288,58 @@ class MouseSpark {
     }
 }
 
-// 初始化
 window.spark = new MouseSpark();
 
-// 通信接口全局挂载
+// C# 通信接口
+
+let lastBoomX = -1, lastBoomY = -1;
+let lastBoomTime = 0; 
+let lastMoveX = -1, lastMoveY = -1;
+
+window.currentInputMode = "mouse";
+window.enableAlwaysTrailEffect = false;
 window.effectiveAlwaysTrail = false;
+
 window.setInputContext = (mode, alwaysTrailEnabled) => {
-    window.effectiveAlwaysTrail = (mode === "mouse" && Boolean(alwaysTrailEnabled));
+    window.currentInputMode = mode === "touch" ? "touch" : "mouse";
+    window.enableAlwaysTrailEffect = Boolean(alwaysTrailEnabled);
+    window.effectiveAlwaysTrail = window.currentInputMode === "mouse" && window.enableAlwaysTrailEffect;
 };
 
+window.setInputContext("mouse", false);
+
+// 接收 C# 传来的物理百分比 (0.0 ~ 1.0)，由前端根据真实的画布宽度自行计算
 window.externalBoom = (percentX, percentY) => {
-    window.dispatchEvent(new MouseEvent('mousedown', { clientX: percentX * window.innerWidth, clientY: percentY * window.innerHeight, bubbles: true }));
+    const now = Date.now();
+    if (percentX === lastBoomX && percentY === lastBoomY && (now - lastBoomTime) < 25) return;
+    lastBoomX = percentX; lastBoomY = percentY; lastBoomTime = now;
+    
+    // 百分比乘以 WebView 当前真实的内部宽度
+    let cx = percentX * window.innerWidth;
+    let cy = percentY * window.innerHeight;
+    window.dispatchEvent(new MouseEvent('mousedown', { clientX: cx, clientY: cy, bubbles: true }));
 };
 
 window.externalMove = (percentX, percentY) => {
-    window.dispatchEvent(new MouseEvent('mousemove', { clientX: percentX * window.innerWidth, clientY: percentY * window.innerHeight, bubbles: true }));
+    if (percentX === lastMoveX && percentY === lastMoveY) return;
+    lastMoveX = percentX; lastMoveY = percentY;
+    
+    // 方法与上述相同
+    let cx = percentX * window.innerWidth;
+    let cy = percentY * window.innerHeight;
+    window.dispatchEvent(new MouseEvent('mousemove', { clientX: cx, clientY: cy, bubbles: true }));
 };
-
 window.externalUp = () => {
     window.dispatchEvent(new MouseEvent('mouseup', { bubbles: true }));
+};
+
+window.updateColor = (rgbString) => {
+    if (window.spark) window.spark.color = rgbString;
+};
+
+window.updateEffectSettings = (scale, opacity, speed) => {
+    if (!window.spark) return;
+    window.spark.scale = Math.max(0.5, Math.min(3, Number(scale) || 1.5));
+    window.spark.opacity = Math.max(0.1, Math.min(1, Number(opacity) || 1.0));
+    window.spark.speed = Math.max(0.2, Math.min(3, Number(speed) || 1.0));
 };
