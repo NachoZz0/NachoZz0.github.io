@@ -4,6 +4,68 @@ class MouseSpark {
         this.scale = opts.scale || 0.8;
         this.opacity = opts.opacity || 1.5;
         this.speed = opts.speed || 1.0;
+
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         this.maxTrail = opts.maxTrail || 16;
 
         this.sparkPool = [];
