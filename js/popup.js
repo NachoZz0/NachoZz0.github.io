@@ -24,7 +24,7 @@ function closePopup() {
     document.getElementById("popupMask").style.display = "none";
 
     // 记录普通弹窗已经显示
-    localStorage.setItem("popupShown", "true");
+    sessionStorage.setItem("popupShown", "true");
 }
 
 
@@ -49,7 +49,7 @@ window.onload = function () {
 
 
     // 普通弹窗只显示一次
-    if (!localStorage.getItem("popupShown")) {
+    if (!sessionStorage.getItem("popupShown")) {
 
         openPopup();
 
