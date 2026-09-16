@@ -1,0 +1,340 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8" />
+    <title> | NachoZzの小窝</title>
+    <meta name="author" content="NachoZz" />
+    <meta name="description" content="  " />
+    <meta name="keywords" content="" />
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+    />
+    <link rel="icon" href="/images/avatar.jpg" />
+    <link rel="preconnect" href="https://s4.zstatic.net" />
+<script src="https://s4.zstatic.net/ajax/libs/vue/3.3.7/vue.global.prod.min.js"></script>
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+<link rel="preconnect" href="https://fonts.googleapis.cn" />
+<link rel="preconnect" href="https://fonts.gstatic.cn" crossorigin />
+<link
+    rel="stylesheet"
+    href="https://fonts.googleapis.cn/css2?family=Fira+Code:wght@400;500;600;700&family=Lexend:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;600;700;800;900&display=swap"
+/>
+<script> const mixins = {}; </script>
+
+<script src="https://polyfill.alicdn.com/v3/polyfill.min.js?features=default"></script>
+
+
+<script src="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://s4.zstatic.net/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+<link
+    rel="stylesheet"
+    href="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/styles/github.min.css"
+/>
+<script src="/js/lib/highlight.js"></script>
+
+
+
+<script src="/js/lib/preview.js"></script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/main.css" />
+
+    <link href="/css/cssv3.css" rel="stylesheet">
+    <script src="/js/jsv2.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/meting@2.0.1/dist/Meting.min.js"></script>
+    
+    <meting-js
+	    server="netease"
+	    type="playlist"
+	    id="14117428052"
+        fixed="true"
+        mini="true"
+        preload="auto"
+        order="random"
+        loop="all"
+        volume="0.5"
+        autoplay="false"
+        
+        >
+    </meting-js>
+
+<div id="cursor"> 
+</div> 
+<link rel="stylesheet" href="/css/cursor.min.css" >
+<script src="/js/cursor.min.js">//鼠标跟随
+</script>
+<canvas
+    id="fireworks"
+    style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 32767"
+></canvas>
+<script src="/js/anime.js">//点击特效</script>
+<script src="/js/fireworks.min.js"></script>
+<canvas
+    id="background"
+    style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: -1"
+></canvas>
+<script src="/js/background.min.js">//背景</script>
+<link rel="stylesheet" href="/css/popup.css" >
+<link rel="stylesheet" href="/css/cake.css" />
+<script src="/js/cake.js"></script>
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body>
+</div>
+    <div id="layout">
+        <transition name="fade">
+            <div id="loading" v-show="loading">
+                <div id="loading-circle">
+                    <h2>LOADING</h2>
+                    <p>需加载全部图片
+                        加载过慢请开启缓存 浏览器默认开启</p>
+                    <img src="/images/loading.gif" />
+                </div>
+            </div>
+        </transition>
+
+
+        
+        <div id="menu" :class="{ hidden: hiddenMenu, 'menu-color': menuColor}">
+    <nav id="desktop-menu">
+        <a class="title" href="/">
+            <span>NACHOZZの小窝</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;Home</span>
+        </a>
+        
+        <a href="/about">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;About</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;Archives</span>
+        </a>
+        
+        <a href="/categories">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;Categories</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;Tags</span>
+        </a>
+        
+        <a href="/SBTI-test">
+            <i class="fa-solid fa-flask fa-fw"></i>
+            <span>&ensp;SBTITEST</span>
+        </a>
+        
+    </nav>
+    <nav id="mobile-menu">
+        <div class="title" @click="showMenuItems = !showMenuItems">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;NACHOZZの小窝</span>
+        </div>
+        <transition name="slide">
+            <div class="items" v-show="showMenuItems">
+                
+                <a href="/">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-house fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Home</div>
+                    </div>
+                </a>
+                
+                <a href="/about">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-id-card fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">About</div>
+                    </div>
+                </a>
+                
+                <a href="/archives">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-box-archive fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Archives</div>
+                    </div>
+                </a>
+                
+                <a href="/categories">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-bookmark fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Categories</div>
+                    </div>
+                </a>
+                
+                <a href="/tags">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-tags fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Tags</div>
+                    </div>
+                </a>
+                
+                <a href="/SBTI-test">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-flask fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">SBTITEST</div>
+                    </div>
+                </a>
+                
+            </div>
+        </transition>
+    </nav>
+</div>
+<transition name="fade">
+    <div id="menu-curtain" @click="showMenuItems = !showMenuItems" v-show="showMenuItems"></div>
+</transition>
+
+        <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
+            <div class="article">
+    <div>
+        <h1></h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2026/1/17
+        </span>
+        
+        
+    </div>
+    
+    <div class="content" v-pre>
+        <p>入党申请书</p>
+<p>敬爱的党组织：</p>
+<p>我志愿加入中国共产党，愿意在党的领导下不断提高思想觉悟，认真学习党的理论知识，坚定理想信念，努力发挥青年学生的责任担当，为集体、社会和国家的发展贡献自己的力量。进入大学以来，我对中国共产党的认识不断加深，也逐渐认识到，加入中国共产党不仅是一种荣誉，更意味着责任、担当和奉献。因此，我怀着认真、诚恳的态度向党组织递交入党申请书，希望能够在党组织的教育、培养和考察下不断提高自己，逐步成为一名符合党员标准的青年。</p>
+<p>通过学习党史和相关理论知识，我逐渐认识到，中国共产党是中国工人阶级的先锋队，同时是中国人民和中华民族的先锋队，是中国特色社会主义事业的领导核心。中国共产党始终坚持全心全意为人民服务的根本宗旨，把实现人民对美好生活的向往作为奋斗目标。通过对党的发展历程的学习，我认识到，中国共产党能够团结带领人民不断取得新的发展成就，与党始终坚持实事求是、依靠人民、服务人民密切相关。作为新时代青年，我也更加认识到，个人的发展不能脱离国家和社会的发展，只有把自己的理想追求与国家需要结合起来，才能让青春拥有更加明确的方向和意义。</p>
+<p>我对党的认识并不是一开始就十分全面，而是在学习和生活中逐步形成、逐步深化的。过去，我对党的认识更多来源于课堂学习、新闻报道以及身边的社会生活，对党的具体理论和历史发展了解得还比较有限。进入大学后，随着学习内容的增加和生活阅历的丰富，我开始主动了解党史、国家发展以及新时代青年的责任，也开始思考自己应该成为一个什么样的人。通过不断学习，我认识到，党员身份并不是一种可以用来展示自己的标签，而是一种需要通过长期行动体现出来的责任。真正的先进性，应当落实到认真学习、遵守纪律、帮助他人、服务集体以及面对困难时勇于承担责任等实际行动中。</p>
+<p>我希望加入中国共产党，也与自己的成长经历和人生思考有关。作为一名大学生，我更加清楚地认识到，大学不仅是学习专业知识的阶段，也是形成价值观、责任感和人生目标的重要时期。我希望自己能够在党组织的教育和帮助下，进一步坚定正确的政治方向，提高辨别和分析问题的能力，学会从更加全面、更加长远的角度看待个人与集体、个人与社会之间的关系。同时，我也希望通过严格要求自己，使自己在学习、生活和实践中都能够有所进步，而不是只满足于完成眼前的任务。</p>
+<p>在学习方面，我始终认识到学生的首要任务是学习。进入大学后，我需要面对更加自主的学习方式，也需要培养独立思考和解决问题的能力。我会认真对待专业课程，努力掌握专业基础知识，同时主动学习与专业相关的知识和技能，不断提高自己的综合能力。面对学习中的困难，我会避免急躁和懈怠，认真分析原因，及时调整学习方法。与此同时，我也会合理安排时间，处理好学习、生活和实践之间的关系，培养自律的习惯。作为新时代大学生，我认为只有真正掌握知识和本领，将来才能更好地承担责任、服务社会。</p>
+<p>在思想方面，我会主动学习党的理论知识，关注国家发展和社会现实，努力提高自己的思想觉悟。我也会认真参加学校和班级组织的各类思想教育活动，不断检视自己的思想和行为。对于自己认识不足的地方，我会及时反思并改正，而不是回避问题。在日常生活中，我会自觉遵守学校规章制度，尊重老师，团结同学，维护集体利益，努力做到言行一致。遇到与自己不同的观点时，我也会保持理性，学会倾听和思考，不断提高自己的综合判断能力。</p>
+<p>在集体生活中，我愿意主动承担力所能及的责任，积极参加班级、学校以及社会实践活动。无论是参加集体活动，还是完成老师和同学交给自己的任务，我都会认真对待，尽量把事情做好。我认为，是否愿意为他人和集体付出，并不一定体现在轰轰烈烈的大事上，很多时候更体现在平常的小事之中。因此，我会从日常生活做起，从帮助同学、维护集体秩序、认真完成任务等具体事情做起，在一点一滴中培养责任意识和服务意识。</p>
+<p>同时，我也清楚地认识到，自己距离一名真正的共产党员还有一定差距。作为一名大学新生，我的思想认识和社会经验还不够丰富，对党的理论知识的学习也还需要进一步深入。在学习和生活中，我有时还存在自我要求不够严格、时间安排不够合理等问题，对一些事情的认识还不够全面。这些问题说明，我还需要不断学习和锻炼。对此，我不会因为自身存在不足而回避，而是会把这些问题作为今后努力改进的方向，主动接受老师、同学和党组织的帮助与监督。</p>
+<p>对于入党，我的态度是严肃而认真的。我知道，递交入党申请书并不意味着自己已经达到了党员标准，而是意味着自己愿意主动接受党组织的教育、培养和考察。我愿意以党员标准严格要求自己，不断加强理论学习，提高思想觉悟，认真完成学习任务，积极参与集体活动，在实际行动中接受检验。如果党组织认为我还存在不足，我会认真听取意见，继续改进；如果在今后的学习和生活中遇到困难，我也会努力保持积极的态度，不断提高解决问题的能力。</p>
+<p>今后，我会从以下几个方面继续努力。首先，加强理论学习，认真学习党的基本理论和基本知识，提高自己的思想认识。其次，认真学习专业知识，掌握扎实的本领，为将来服务社会、贡献国家打下基础。再次，在集体生活中增强责任感和服务意识，主动帮助他人，积极参加各类实践活动。最后，严格遵守学校各项规章制度，培养良好的生活习惯和学习作风，及时发现并改正自身缺点。</p>
+<p>我深知，成为一名共产党员是一件严肃而光荣的事情，需要经过长期的学习、实践和考察。我愿意从现在做起，从身边的小事做起，不断提高自身素质，用实际行动证明自己的入党决心。我也愿意接受党组织的教育、帮助和监督，在学习中进步，在实践中成长，在不断认识和改正自身不足的过程中向党组织靠拢。</p>
+<p>请党组织在实践中考验我！</p>
+<p>此致<br>敬礼！</p>
+<p>申请人：XXX<br>XXXX年XX月XX日</p>
+<hr>
+<p>入党申请书</p>
+<p>敬爱的党组织：</p>
+<p>我志愿加入中国共产党，愿意在党的领导下不断提高自身思想觉悟，坚定理想信念，努力学习科学文化知识，积极参加社会实践和集体活动，在学习和生活中严格要求自己，为集体、社会贡献自己的力量。进入大学以来，随着学习环境、生活环境和思想认识的不断变化，我对中国共产党的认识也逐渐深入。通过对党史、党的理论知识以及新时代青年责任的学习，我更加认识到，作为一名青年大学生，应当主动向先进靠拢，不断提高自身综合素质。因此，我怀着认真、诚恳的态度向党组织递交入党申请书，希望能够接受党组织的教育、培养和考察。</p>
+<p>一、为什么要加入中国共产党</p>
+<p>中国共产党是中国工人阶级的先锋队，同时是中国人民和中华民族的先锋队，是中国特色社会主义事业的领导核心。通过对党的历史和理论知识的学习，我逐渐认识到，中国共产党始终把为中国人民谋幸福、为中华民族谋复兴作为自己的初心和使命。党的发展历程让我认识到，一个先进的政党不仅需要有坚定的理想信念，也需要始终坚持从实际出发，依靠人民、服务人民。</p>
+<p>过去，我对党的认识更多来自课堂学习、新闻报道和身边党员的日常表现，对党的理解还比较笼统。进入大学后，我开始主动接触和学习更多有关党的知识，也逐渐认识到，申请入党并不是为了获得某种荣誉，更不是为了给个人发展增加一项经历，而是应该在思想上、行动上都主动接受党组织的教育和考验。真正成为一名党员，需要承担相应的责任，需要在学习、工作和生活中发挥积极作用，也需要在面对困难和问题时能够坚持原则、认真负责。</p>
+<p>我认识到，青年大学生正处在人生发展的重要阶段。大学不仅是学习专业知识的地方，也是培养责任意识、集体意识和社会责任感的重要阶段。如果只关注个人成绩和个人利益，而忽视集体和社会，就很难真正实现全面发展。因此，我希望能够通过向党组织靠拢，不断提高自己的思想觉悟，把个人成长与集体需要、社会发展联系起来，在今后的学习和实践中更加严格地要求自己。</p>
+<p>我申请加入中国共产党，也是希望能够在党组织的教育和帮助下进一步明确自己的努力方向。作为新时代青年，我应该珍惜现在的学习机会，努力掌握专业知识，提高解决实际问题的能力，同时培养良好的道德品质和责任意识。在今后的学习和生活中，我希望能够以更加积极的态度面对困难，以更加踏实的态度完成自己的任务，在力所能及的范围内帮助同学、服务集体。</p>
+<p>二、个人基本情况</p>
+<p>我是一名刚刚进入大学的大一学生。进入新的学习环境后，我逐渐认识到大学生活与高中阶段有很大的不同。大学更加注重自主学习和自我管理，这也让我认识到，一个人的成长不仅需要学习成绩，更需要自律、责任和长期坚持。</p>
+<p>在学习方面，我始终认为学生的主要任务是学习。进入大学以后，我希望能够尽快适应大学的学习方式，认真学习专业课程，打好基础。同时，我也注重培养自己的兴趣和实践能力，在课余时间主动学习一些与专业和计算机相关的知识。通过自主学习，我逐渐认识到知识不仅存在于课堂和教材中，还需要通过实践不断理解和运用。今后，我会继续保持认真学习的态度，不断提高自己的专业能力。</p>
+<p>在思想方面，我认识到自己还存在许多不足。由于进入大学时间还不长，我对党的理论知识和相关历史的学习还不够系统，对一些理论问题的理解也需要进一步深入。因此，我不会把递交入党申请书当作学习的终点，而是把它作为新的开始。我会主动学习党的理论知识，认真参加学校和学院组织的相关学习活动，通过学习不断提高自己的思想认识。</p>
+<p>在生活方面，我能够遵守学校的各项规章制度，认真完成自己的学习和生活任务。进入大学以后，我也逐渐认识到集体生活需要每个人承担责任。无论是宿舍生活、班级活动还是学校组织的各项活动，都需要大家相互理解、相互配合。我会努力培养自己的集体意识，尊重老师和同学，与同学友好相处，在集体需要的时候积极承担自己应尽的责任。</p>
+<p>在个人作风方面，我认识到良好的习惯需要长期坚持。作为一名大学生，我会从日常小事做起，做到诚实守信、遵守纪律、认真负责，避免浮躁和急于求成。对于自己的不足，我会主动总结和改进，而不是回避问题。</p>
+<p>当然，我也清楚地认识到自己距离一名优秀的共产党员还有一定差距。例如，我的理论知识积累还不够丰富，对一些问题的认识还不够全面；在处理学习和生活中的一些事情时，有时还需要进一步提高计划性和执行力；参加实践活动的经验也还需要不断积累。对于这些问题，我不会因为它们的存在而退缩，而是会把它们作为自己今后努力改进的方向。</p>
+<p>三、对待入党的态度和决心</p>
+<p>我深知，加入中国共产党是一件严肃而光荣的事情，也意味着责任和担当。申请入党并不意味着自己已经达到党员的标准，而是意味着自己愿意主动接受党组织的教育、培养和考察，并在这个过程中不断提高自己。</p>
+<p>如果党组织能够批准我的申请，我一定会更加严格地要求自己，认真学习党的理论知识，自觉遵守党的纪律和学校的各项规章制度，在学习中发挥积极作用，在集体活动中主动承担责任，在日常生活中做到诚实、踏实、认真。同时，我也会不断提高自己的专业能力，把个人的学习和成长与国家和社会的发展联系起来，努力成为一名有理想、有责任、有本领的青年学生。</p>
+<p>如果党组织认为我目前还存在不足，没有批准我的申请，我也不会因此产生消极情绪。我会正确对待党组织的意见，认真查找自己的问题，继续加强学习和实践，以实际行动证明自己的入党决心。我相信，加入党组织不仅仅是一个结果，更重要的是在不断接受教育、不断提高自身的过程中，让自己真正具备一名共产党员应该具有的责任意识和奉献精神。</p>
+<p>今后，我会从身边的小事做起，从自己的学习和生活做起。认真完成每一次学习任务，遵守学校纪律，积极参加集体活动，主动帮助身边有需要的同学，在实践中培养责任意识。同时，我也会主动接受老师、同学和党组织的监督，虚心听取意见，及时改正自己的缺点。</p>
+<p>作为一名新时代大学生，我深知自己肩负着学习知识、增长本领和服务社会的责任。现在的我还处于成长阶段，还有很多知识需要学习，还有很多能力需要提高。因此，我会珍惜大学生活，把学习作为当前的重要任务，同时不断提高自己的思想觉悟和综合素质。无论今后能否顺利加入党组织，我都会按照更高的标准要求自己，努力向先进看齐，用实际行动不断完善自己。</p>
+<p>请党组织在今后的学习、工作和生活中考验我。我愿意接受党组织的教育、培养和监督，并将以更加严格的要求规范自己的言行，以实际行动争取早日成为一名合格的中国共产党党员。</p>
+<p>此致</p>
+<p>敬礼！</p>
+<p>申请人：XXX<br>2026年XX月XX日</p>
+
+    </div>
+    
+    
+    
+    
+    <div id="comment">
+        <div id="giscus-container" class="giscus"></div>
+    </div>
+    
+    
+    
+    
+</div>
+
+            <footer id="footer">
+    <div id="footer-wrap">
+        <div>
+            &copy;
+            2022 - 2026 NachoZzの小窝
+            <span id="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            &commat;NachoZz
+        </div>
+        <div>
+            Based on the <a target="_blank" rel="noopener" href="https://hexo.io">Hexo Engine</a> &amp;
+            <a target="_blank" rel="noopener" href="https://github.com/theme-particlex/hexo-theme-particlex">ParticleX Theme</a>
+        </div>
+        
+    </div>
+</footer>
+
+        </div>
+        
+        <transition name="fade">
+            <div id="preview" ref="preview" v-show="previewShow">
+                <img id="preview-content" ref="previewContent" />
+            </div>
+        </transition>
+        
+    </div>
+    <script src="/js/main.js"></script>
+    
+    
+<script
+    src="https://giscus.app/client.js"
+    data-repo="NachoZz0/NachoZz0.github.io"
+    data-repo-id="R_kgDONkrbHA"
+    data-category="Announcements"
+    data-category-id="DIC_kwDONkrbHM4CmFUi"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="bottom"
+    data-theme="preferred_color_scheme"
+    data-lang="zh-CN"
+    crossorigin
+    async
+></script>
+
+
+
+
+
+    
+</body>
+</html>
