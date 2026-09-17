@@ -46,25 +46,10 @@
 
 <link rel="stylesheet" href="/css/main.css" />
 
-    <link href="/css/cssv3.css" rel="stylesheet">
-    <script src="/js/jsv2.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/meting@2.0.1/dist/Meting.min.js"></script>
-    
-    <meting-js
-	    server="netease"
-	    type="playlist"
-	    id="14117428052"
-        fixed="true"
-        mini="true"
-        preload="auto"
-        order="random"
-        loop="all"
-        volume="0.5"
-        autoplay="false"
-        
-        >
-    </meting-js>
+<!-- aplayercss -->    
+<link href="/css/cssv3.css" rel="stylesheet">
 
+<!-- 鼠标动画     -->
 <div id="cursor"> 
 </div> 
 <link rel="stylesheet" href="/css/cursor.min.css" >
@@ -76,16 +61,40 @@
 ></canvas>
 <script src="/js/anime.js">//点击特效</script>
 <script src="/js/fireworks.min.js"></script>
+
+<!-- 背景动画 -->
 <canvas
     id="background"
     style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: -1"
 ></canvas>
 <script src="/js/background.min.js">//背景</script>
+
+<!-- 弹窗 -->
 <link rel="stylesheet" href="/css/popup.css" >
 <link rel="stylesheet" href="/css/cake.css" />
 <script src="/js/cake.js"></script>
 <meta name="generator" content="Hexo 7.3.0"></head>
-<body>
+<body>    
+    <meting-js     
+	    server="netease"
+        type="playlist"
+        id="60198"
+        fixed="true"
+        mini="true"
+        preload="auto"
+        order="random"
+        loop="all"
+        volume="0.5"
+        autoplay="false"
+        >
+    </meting-js>
+    <script>
+        window.meting_api =
+            "https://api.qijieya.cn/meting/?type=playlist&id=14117428052";
+    </script>    
+    <script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+
 </div>
     <div id="layout">
         <transition name="fade">
@@ -98,9 +107,6 @@
                 </div>
             </div>
         </transition>
-
-
-        
         <div id="menu" :class="{ hidden: hiddenMenu, 'menu-color': menuColor}">
     <nav id="desktop-menu">
         <a class="title" href="/">
@@ -269,17 +275,17 @@
         
         <span class="tag">
             
-            <a href="/tags/%E6%B8%B8%E6%88%8F/" style="color: #03a9f4">游戏</a>
+            <a href="/tags/%E6%B8%B8%E6%88%8F/" style="color: #ffa2c4">游戏</a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/%E7%94%9F%E6%B4%BB/" style="color: #00bcd4">生活</a>
+            <a href="/tags/%E7%94%9F%E6%B4%BB/" style="color: #ff7d73">生活</a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/Minecraft/" style="color: #00a596">Minecraft</a>
+            <a href="/tags/Minecraft/" style="color: #03a9f4">Minecraft</a>
         </span>
         
     </div>
@@ -318,7 +324,7 @@
         
         <span class="tag">
             
-            <a href="/tags/%E6%B8%B8%E6%88%8F/" style="color: #00a596">游戏</a>
+            <a href="/tags/%E6%B8%B8%E6%88%8F/" style="color: #ff7d73">游戏</a>
         </span>
         
         <span class="tag">
@@ -328,7 +334,7 @@
         
         <span class="tag">
             
-            <a href="/tags/Minecraft/" style="color: #ff7d73">Minecraft</a>
+            <a href="/tags/Minecraft/" style="color: #00a596">Minecraft</a>
         </span>
         
     </div>
@@ -398,17 +404,17 @@
         
         <span class="tag">
             
-            <a href="/tags/%E9%9F%B3%E4%B9%90/" style="color: #00a596">音乐</a>
+            <a href="/tags/%E9%9F%B3%E4%B9%90/" style="color: #00bcd4">音乐</a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/" style="color: #00bcd4">实用工具</a>
+            <a href="/tags/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/" style="color: #03a9f4">实用工具</a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/%E6%8F%92%E4%BB%B6/" style="color: #03a9f4">插件</a>
+            <a href="/tags/%E6%8F%92%E4%BB%B6/" style="color: #ffa2c4">插件</a>
         </span>
         
     </div>
