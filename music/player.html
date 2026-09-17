@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="基于 Meting API 与 APlayer 的音乐播放页面" />
+    <title>你的电台 · 音乐播放器</title>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+    <link rel="stylesheet" href="/css/cssv3.css" />
+    <style>
+      :root { color-scheme: dark; font-family: Inter, "PingFang SC", "Microsoft YaHei", sans-serif; }
+      * { box-sizing: border-box; }
+      body { min-height: 100vh; margin: 0; display: grid; place-items: center; overflow: hidden; color: #f7f5ff; background: #100d1c; }
+      body::before, body::after { content: ""; position: fixed; z-index: -1; width: 42rem; height: 42rem; border-radius: 50%; filter: blur(72px); opacity: .45; }
+      body::before { top: -20rem; left: -13rem; background: #9d66ff; }
+      body::after { right: -16rem; bottom: -21rem; background: #ff7474; }
+      main { width: min(920px, calc(100% - 32px)); padding: clamp(28px, 7vw, 68px); border: 1px solid rgba(255,255,255,.16); border-radius: 28px; background: linear-gradient(135deg, rgba(37,28,61,.87), rgba(22,18,35,.75)); box-shadow: 0 24px 80px rgba(0,0,0,.38); backdrop-filter: blur(18px); }
+      .eyebrow { margin: 0 0 10px; color: #d8c5ff; font-size: .75rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; }
+      h1 { margin: 0; font-size: clamp(2rem, 6vw, 4.4rem); line-height: .98; letter-spacing: -.06em; }
+      .intro { max-width: 40rem; margin: 24px 0 38px; color: #c9c3d5; line-height: 1.7; }
+      .playlist-form { display: flex; gap: 10px; margin: 0 0 14px; }
+      .playlist-form input { min-width: 0; flex: 1; padding: 12px 14px; border: 1px solid rgba(255,255,255,.18); border-radius: 11px; outline: none; color: #fff; font: inherit; background: rgba(255,255,255,.08); }
+      .playlist-form input:focus { border-color: #bda4ff; box-shadow: 0 0 0 3px rgba(141,98,239,.24); }
+      .playlist-form button, .help-link { border: 0; border-radius: 11px; padding: 0 18px; color: #fff; font: inherit; font-weight: 700; cursor: pointer; text-decoration: none; background: #8056de; transition: transform .16s ease, background .16s ease; }
+      .playlist-form button:hover { background: #946bf0; transform: translateY(-1px); }
+      .help-link { display: inline-flex; align-items: center; justify-content: center; white-space: nowrap; color: #d9caff; background: rgba(255,255,255,.08); }
+      .help-link:hover { color: #fff; background: rgba(255,255,255,.16); }
+      .playlist-hint { min-height: 1.3em; margin: -4px 0 18px; color: #aea6bd; font-size: .78rem; }
+      .api-note { display: flex; gap: 12px; align-items: center; margin-top: 30px; color: #afa9bd; font-size: .82rem; }
+      .dot { flex: 0 0 auto; width: 8px; height: 8px; border-radius: 99px; background: #90e6bd; box-shadow: 0 0 12px #90e6bd; }
+      #aplayer { overflow: hidden; border-radius: 16px; box-shadow: 0 12px 30px rgba(0,0,0,.22); }
+      .aplayer { margin: 0 !important; font-family: inherit !important; }
+      .aplayer .aplayer-info { border-top: 0 !important; }
+      @media (max-width: 560px) { main { padding: 28px 20px; border-radius: 20px; } .intro { margin-bottom: 27px; } .playlist-form { flex-direction: column; } .playlist-form button, .help-link { height: 44px; } }
+    </style>
+  </head>
+  <body>
+    <main>
+      <p class="eyebrow">Meting API × APlayer</p>
+      <h1>你的电台</h1>
+      <p class="intro">从网易云歌单加载的音乐，按下播放键，让这一刻有自己的配乐(可播放vip歌曲)。</p>
+      <form class="playlist-form" id="playlist-form">
+        <input id="playlist-id" inputmode="numeric" autocomplete="off" aria-label="网易云歌单 ID" placeholder="输入网易云歌单 ID" />
+        <button type="submit">加载歌单</button>
+        <a class="help-link" href="/music/netease.html" target="_blank" rel="noopener noreferrer">如何获取网易云歌单 ID</a>
+      </form>
+      <p class="playlist-hint" id="playlist-hint">输入网易云歌单 ID 后点击加载</p>
+      <div id="aplayer" aria-label="音乐播放器"></div>
+      <p class="api-note"><span class="dot"></span>歌单信息由 Meting API 实时提供</p>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/meting@2.0.1/dist/Meting.min.js"></script>
+    <script>
+      const form = document.querySelector('#playlist-form');
+      const input = document.querySelector('#playlist-id');
+      const hint = document.querySelector('#playlist-hint');
+      const playerHost = document.querySelector('#aplayer');
+
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const id = input.value.trim();
+        if (!/^\d+$/.test(id)) {
+          hint.textContent = '请输入纯数字的网易云歌单 ID。';
+          input.focus();
+          return;
+        }
+
+        const player = document.createElement('meting-js');
+        player.setAttribute('server', 'netease');
+        player.setAttribute('type', 'playlist');
+        player.setAttribute('id', id);
+        player.setAttribute('api', `https://api.qijieya.cn/meting/?type=playlist&id=${encodeURIComponent(id)}`);
+        player.setAttribute('list-folded', 'false');
+        player.setAttribute('theme', '#8d62ef');
+        player.setAttribute('order', 'list');
+        player.setAttribute('volume', '0.7');
+        player.setAttribute('preload', 'metadata');
+        const rendered = new MutationObserver(() => {
+          if (player.querySelector('.aplayer')) {
+            hint.textContent = `已加载歌单 ${id}`;
+            rendered.disconnect();
+          }
+        });
+        rendered.observe(player, { childList: true, subtree: true });
+        playerHost.replaceChildren(player);
+        hint.textContent = `正在加载歌单 ${id}…`;
+      });
+    </script>
+  </body>
+</html>
