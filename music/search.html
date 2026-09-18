@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="网易云单曲搜索与播放" />
+    <title>搜索单曲 · 你的电台</title>
+    <link rel="stylesheet" href="/css/cssv3.css" />
+    <style>
+      :root { color-scheme: dark; font-family: Inter, "PingFang SC", "Microsoft YaHei", sans-serif; }
+      * { box-sizing: border-box; }
+      body { min-height: 100vh; margin: 0; padding: 32px 16px; color: #f7f5ff; background: radial-gradient(circle at 12% 10%, #4b287e, transparent 32rem), radial-gradient(circle at 95% 100%, #7c303e, transparent 29rem), #100d1c; }
+      main { width: min(820px, 100%); margin: auto; padding: clamp(25px, 6vw, 55px); border: 1px solid rgba(255,255,255,.16); border-radius: 28px; background: rgba(25,19,42,.82); box-shadow: 0 24px 80px rgba(0,0,0,.35); backdrop-filter: blur(18px); }
+      .back { color: #d8c5ff; font-size: .88rem; text-decoration: none; }
+      .back:hover { color: #fff; }
+      .eyebrow { margin: 34px 0 10px; color: #d8c5ff; font-size: .75rem; font-weight: 700; letter-spacing: .18em; }
+      h1 { margin: 0; font-size: clamp(2rem, 6vw, 4rem); letter-spacing: -.06em; }
+      .intro { margin: 20px 0 28px; color: #c9c3d5; line-height: 1.7; }
+      .search-form { display: flex; gap: 10px; }
+      input { min-width: 0; flex: 1; padding: 13px 15px; border: 1px solid rgba(255,255,255,.18); border-radius: 11px; outline: none; color: #fff; font: inherit; background: rgba(255,255,255,.08); }
+      input:focus { border-color: #bda4ff; box-shadow: 0 0 0 3px rgba(141,98,239,.24); }
+      button { border: 0; border-radius: 11px; padding: 0 19px; color: #fff; font: inherit; font-weight: 700; cursor: pointer; background: #8056de; transition: transform .16s ease, background .16s ease; }
+      button:hover { background: #946bf0; transform: translateY(-1px); }
+      .status { min-height: 1.4em; margin: 13px 0 15px; color: #b9b1c9; font-size: .85rem; }
+      .status.loading::before { content: ""; display: inline-block; width: 12px; height: 12px; margin: 0 8px -1px 0; border: 2px solid rgba(216,197,255,.28); border-top-color: #d8c5ff; border-radius: 50%; animation: spin .7s linear infinite; }
+      .results { display: grid; gap: 9px; }
+      .results.is-visible { animation: results-in .36s ease both; }
+      .song { display: flex; align-items: center; gap: 14px; width: 100%; padding: 11px; border: 1px solid rgba(255,255,255,.1); border-radius: 14px; text-align: left; background: rgba(255,255,255,.05); }
+      .song:hover { background: rgba(255,255,255,.12); }
+      .song img, .cover-placeholder { flex: 0 0 44px; width: 44px; height: 44px; border-radius: 9px; object-fit: cover; background: #513685; }
+      .song-name { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+      .song-artist { display: block; margin-top: 4px; color: #bbb4c8; font-size: .8rem; }
+      #player { margin-top: 22px; overflow: hidden; border-radius: 16px; box-shadow: 0 12px 30px rgba(0,0,0,.22); }
+      #player:empty { display: none; }
+      #fixed-player { display: contents; }
+      .aplayer.aplayer-fixed { right: auto !important; bottom: 0; left: 0 !important; }
+      #player.is-switching { animation: results-in .36s ease both; }
+      .aplayer { margin: 0 !important; font-family: inherit !important; }
+      .aplayer .aplayer-info { border-top: 0 !important; }
+      @keyframes spin { to { transform: rotate(360deg); } }
+      @keyframes results-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+      @media (max-width: 520px) { main { padding: 28px 20px; } .search-form { flex-direction: column; } button { height: 46px; } }
+    </style>
+  </head>
+  <body>
+    <main>
+      <a class="back" href="player.html">← 返回歌单播放器</a>
+      <p class="eyebrow">NETEASE SEARCH</p>
+      <h1>搜索单曲</h1>
+      <p class="intro">输入歌名、歌手或关键词，选择搜索结果即可开始播放。</p>
+      <form class="search-form" id="search-form">
+        <input id="keyword" autocomplete="off" aria-label="搜索关键词" placeholder="例如：晴天 周杰伦" required />
+        <button type="submit">搜索</button>
+      </form>
+      <p class="status" id="status" aria-live="polite">请输入关键词开始搜索</p>
+      <section class="results" id="results" aria-label="搜索结果"></section>
+      <div id="player" aria-label="迷你单曲播放器"></div>
+    </main>
+    <div id="fixed-player" aria-label="固定迷你播放器"></div>
+    <script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script>
+    <script>
+      const form = document.querySelector('#search-form');
+      const keyword = document.querySelector('#keyword');
+      const status = document.querySelector('#status');
+      const results = document.querySelector('#results');
+      const playerHost = document.querySelector('#player');
+      const fixedPlayerHost = document.querySelector('#fixed-player');
+      let player;
+
+      const artistText = (artist) => Array.isArray(artist) ? artist.map((item) => item.name || item).join(' / ') : (artist || '未知歌手');
+      const normalize = (payload) => Array.isArray(payload) ? payload : (payload.data || payload.result || []);
+      const showResults = (songs) => {
+        results.replaceChildren();
+        results.classList.remove('is-visible');
+        songs.slice(0, 20).forEach((song) => {
+          const item = document.createElement('button');
+          item.className = 'song';
+          const cover = song.cover || song.pic || song.album?.picUrl;
+          if (cover) { const image = document.createElement('img'); image.src = cover; image.alt = ''; item.append(image); }
+          else { const placeholder = document.createElement('span'); placeholder.className = 'cover-placeholder'; item.append(placeholder); }
+          const details = document.createElement('span');
+          const name = document.createElement('strong'); name.className = 'song-name'; name.textContent = song.name || song.title || '未命名单曲';
+          const artist = document.createElement('span'); artist.className = 'song-artist'; artist.textContent = artistText(song.artist || song.artists);
+          details.append(name, artist); item.append(details);
+          item.addEventListener('click', () => play(song));
+          results.append(item);
+        });
+        requestAnimationFrame(() => results.classList.add('is-visible'));
+      };
+      const play = (song) => {
+        const source = song.url || song.src;
+        if (!source) { status.textContent = '该单曲暂时没有可用播放链接。'; return; }
+        if (player) player.destroy();
+        playerHost.replaceChildren();
+        playerHost.classList.remove('is-switching');
+        // MetingJS 的 mini 属性最终传递给 APlayer；直接使用接口返回的音源以兼容搜索结果。
+        player = new APlayer({ container: fixedPlayerHost, fixed: true, mini: true, autoplay: true, theme: '#8d62ef', audio: { name: song.name || song.title, artist: artistText(song.artist || song.artists), url: source, cover: song.cover || song.pic, lrc: song.lrc } });
+        status.textContent = `正在播放：${song.name || song.title}`;
+      };
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const query = keyword.value.trim();
+        if (!query) return;
+        results.replaceChildren(); results.classList.remove('is-visible');
+        status.className = 'status loading'; status.textContent = '正在搜索';
+        try {
+          const response = await fetch(`https://api.qijieya.cn/meting/?type=search&id=${encodeURIComponent(query)}`);
+          if (!response.ok) throw new Error('请求失败');
+          const songs = normalize(await response.json());
+          if (!songs.length) { status.className = 'status'; status.textContent = '没有找到匹配单曲。'; return; }
+          status.className = 'status'; status.textContent = `找到 ${songs.length} 首单曲，点击即可播放。`;
+          showResults(songs);
+        } catch (error) { status.className = 'status'; status.textContent = '搜索失败，请稍后重试。'; }
+      });
+    </script>
+  </body>
+</html>

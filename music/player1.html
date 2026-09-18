@@ -26,6 +26,13 @@
       .help-link { display: inline-flex; align-items: center; justify-content: center; white-space: nowrap; color: #d9caff; background: rgba(255,255,255,.08); }
       .help-link:hover { color: #fff; background: rgba(255,255,255,.16); }
       .playlist-hint { min-height: 1.3em; margin: -4px 0 18px; color: #aea6bd; font-size: .78rem; }
+      .saved-playlists { margin: 0 0 20px; }
+      .saved-playlists:empty { display: none; }
+      .saved-title { margin: 0 0 9px; color: #d8c5ff; font-size: .76rem; font-weight: 700; letter-spacing: .1em; }
+      .saved-list { display: flex; flex-wrap: wrap; gap: 8px; }
+      .saved-item { display: inline-flex; align-items: center; gap: 7px; padding: 8px 10px 8px 12px; border: 1px solid rgba(255,255,255,.14); border-radius: 999px; color: #d6d0e2; font: inherit; font-size: .8rem; background: rgba(255,255,255,.06); }
+      .saved-item button { padding: 0; border: 0; color: inherit; font: inherit; cursor: pointer; background: transparent; }
+      .saved-item .remove-saved { color: #b9afc9; font-size: 1.1rem; line-height: .8; }
       .api-note { display: flex; gap: 12px; align-items: center; margin-top: 30px; color: #afa9bd; font-size: .82rem; }
       .dot { flex: 0 0 auto; width: 8px; height: 8px; border-radius: 99px; background: #90e6bd; box-shadow: 0 0 12px #90e6bd; }
       #aplayer { overflow: hidden; border-radius: 16px; box-shadow: 0 12px 30px rgba(0,0,0,.22); }
@@ -38,13 +45,14 @@
     <main>
       <p class="eyebrow">Meting API × APlayer</p>
       <h1>你的电台</h1>
-      <p class="intro">从网易云歌单加载的音乐，按下播放键，让这一刻有自己的配乐(可播放vip歌曲)。</p>
+      <p class="intro">从网易云歌单加载的音乐，按下播放键，让这一刻有自己的配乐。</p>
       <form class="playlist-form" id="playlist-form">
         <input id="playlist-id" inputmode="numeric" autocomplete="off" aria-label="网易云歌单 ID" placeholder="输入网易云歌单 ID" />
         <button type="submit">加载歌单</button>
-        <a class="help-link" href="/music/netease.html" target="_blank" rel="noopener noreferrer">如何获取网易云歌单 ID</a>
+        <a class="help-link" href="https://nachozz.netlify.app/music/netease.html" target="_blank" rel="noopener noreferrer">如何获取网易云歌单 ID</a>
       </form>
       <p class="playlist-hint" id="playlist-hint">输入网易云歌单 ID 后点击加载</p>
+      <section class="saved-playlists" id="saved-playlists" aria-label="已保存歌单"></section>
       <div id="aplayer" aria-label="音乐播放器"></div>
       <p class="api-note"><span class="dot"></span>歌单信息由 Meting API 实时提供</p>
     </main>
@@ -56,6 +64,42 @@
       const input = document.querySelector('#playlist-id');
       const hint = document.querySelector('#playlist-hint');
       const playerHost = document.querySelector('#aplayer');
+      const savedHost = document.querySelector('#saved-playlists');
+      const storageKey = 'afternoon-radio-saved-playlists';
+
+      const savedIds = () => {
+        try { return JSON.parse(localStorage.getItem(storageKey)) || []; }
+        catch { return []; }
+      };
+      const renderSaved = () => {
+        const ids = savedIds();
+        savedHost.replaceChildren();
+        if (!ids.length) return;
+        const title = document.createElement('p');
+        title.className = 'saved-title';
+        title.textContent = '已保存歌单';
+        const list = document.createElement('div');
+        list.className = 'saved-list';
+        ids.forEach((id) => {
+          const item = document.createElement('span');
+          item.className = 'saved-item';
+          const load = document.createElement('button');
+          load.textContent = `歌单 ${id}`;
+          load.addEventListener('click', () => { input.value = id; form.requestSubmit(); });
+          const remove = document.createElement('button');
+          remove.className = 'remove-saved';
+          remove.title = `删除歌单 ${id}`;
+          remove.setAttribute('aria-label', `删除歌单 ${id}`);
+          remove.textContent = '×';
+          remove.addEventListener('click', () => {
+            localStorage.setItem(storageKey, JSON.stringify(savedIds().filter((savedId) => savedId !== id)));
+            renderSaved();
+          });
+          item.append(load, remove);
+          list.append(item);
+        });
+        savedHost.append(title, list);
+      };
 
       form.addEventListener('submit', (event) => {
         event.preventDefault();
@@ -84,8 +128,16 @@
         });
         rendered.observe(player, { childList: true, subtree: true });
         playerHost.replaceChildren(player);
+        const ids = savedIds();
+        if (!ids.includes(id)) {
+          localStorage.setItem(storageKey, JSON.stringify([...ids, id]));
+          renderSaved();
+        }
         hint.textContent = `正在加载歌单 ${id}…`;
+        hint.textContent = `正在加载歌单 ${id}，已自动保存到本机浏览器。`;
       });
+
+      renderSaved();
     </script>
   </body>
 </html>

@@ -18,6 +18,15 @@
       .eyebrow { margin: 0 0 10px; color: #d8c5ff; font-size: .75rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; }
       h1 { margin: 0; font-size: clamp(2rem, 6vw, 4.4rem); line-height: .98; letter-spacing: -.06em; }
       .intro { max-width: 40rem; margin: 24px 0 38px; color: #c9c3d5; line-height: 1.7; }
+      .playlist-toggle { display: inline-flex; align-items: center; gap: 9px; margin: 0 0 14px; border: 1px solid rgba(255,255,255,.16); border-radius: 12px; padding: 12px 16px; color: #efeaff; font: inherit; font-weight: 700; cursor: pointer; background: rgba(255,255,255,.08); transition: background .16s ease, transform .16s ease; }
+      .playlist-toggle:hover { background: rgba(255,255,255,.14); transform: translateY(-1px); }
+      .playlist-toggle::after { content: "⌄"; font-size: 1.1rem; transition: transform .24s ease; }
+      .playlist-toggle[aria-expanded="true"]::after { transform: rotate(180deg); }
+      .page-link { display: inline-flex; align-items: center; margin: 0 0 14px 8px; color: #d8c5ff; font-size: .86rem; text-decoration: none; }
+      .page-link:hover { color: #fff; }
+      .playlist-panel { display: grid; grid-template-rows: 0fr; opacity: 0; margin: 0; transition: grid-template-rows .3s ease, opacity .2s ease, margin .3s ease; }
+      .playlist-panel.is-open { grid-template-rows: 1fr; opacity: 1; margin: 0 0 4px; }
+      .playlist-panel-inner { min-height: 0; overflow: hidden; }
       .playlist-form { display: flex; gap: 10px; margin: 0 0 14px; }
       .playlist-form input { min-width: 0; flex: 1; padding: 12px 14px; border: 1px solid rgba(255,255,255,.18); border-radius: 11px; outline: none; color: #fff; font: inherit; background: rgba(255,255,255,.08); }
       .playlist-form input:focus { border-color: #bda4ff; box-shadow: 0 0 0 3px rgba(141,98,239,.24); }
@@ -35,9 +44,15 @@
       .saved-item .remove-saved { color: #b9afc9; font-size: 1.1rem; line-height: .8; }
       .api-note { display: flex; gap: 12px; align-items: center; margin-top: 30px; color: #afa9bd; font-size: .82rem; }
       .dot { flex: 0 0 auto; width: 8px; height: 8px; border-radius: 99px; background: #90e6bd; box-shadow: 0 0 12px #90e6bd; }
-      #aplayer { overflow: hidden; border-radius: 16px; box-shadow: 0 12px 30px rgba(0,0,0,.22); }
+      #aplayer { position: relative; overflow: hidden; border-radius: 16px; box-shadow: 0 12px 30px rgba(0,0,0,.22); transition: opacity .25s ease, transform .25s ease; }
+      #aplayer.is-loading { display: grid; min-height: 106px; place-items: center; opacity: .75; transform: translateY(5px); box-shadow: none; }
+      #aplayer.is-loading::before { content: "正在加载歌单"; display: flex; align-items: center; gap: 10px; color: #cfc4e4; font-size: .85rem; }
+      #aplayer.is-loading::after { content: ""; position: absolute; width: 18px; height: 18px; margin-left: -116px; border: 2px solid rgba(216,197,255,.28); border-top-color: #d8c5ff; border-radius: 50%; animation: spin .7s linear infinite; }
+      #aplayer.is-ready { animation: player-in .42s ease both; }
       .aplayer { margin: 0 !important; font-family: inherit !important; }
       .aplayer .aplayer-info { border-top: 0 !important; }
+      @keyframes spin { to { transform: rotate(360deg); } }
+      @keyframes player-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
       @media (max-width: 560px) { main { padding: 28px 20px; border-radius: 20px; } .intro { margin-bottom: 27px; } .playlist-form { flex-direction: column; } .playlist-form button, .help-link { height: 44px; } }
     </style>
   </head>
@@ -46,12 +61,18 @@
       <p class="eyebrow">Meting API × APlayer</p>
       <h1>你的电台</h1>
       <p class="intro">从网易云歌单加载的音乐，按下播放键，让这一刻有自己的配乐。</p>
-      <form class="playlist-form" id="playlist-form">
-        <input id="playlist-id" inputmode="numeric" autocomplete="off" aria-label="网易云歌单 ID" placeholder="输入网易云歌单 ID" />
-        <button type="submit">加载歌单</button>
-        <a class="help-link" href="https://nachozz.netlify.app/music/netease.html" target="_blank" rel="noopener noreferrer">如何获取网易云歌单 ID</a>
-      </form>
-      <p class="playlist-hint" id="playlist-hint">输入网易云歌单 ID 后点击加载</p>
+      <button class="playlist-toggle" id="playlist-toggle" type="button" aria-expanded="false" aria-controls="playlist-panel">添加或切换歌单</button>
+      <a class="page-link" href="search.html">搜索单曲 →</a>
+      <section class="playlist-panel" id="playlist-panel" aria-hidden="true">
+        <div class="playlist-panel-inner">
+          <form class="playlist-form" id="playlist-form">
+            <input id="playlist-id" inputmode="numeric" autocomplete="off" aria-label="网易云歌单 ID" placeholder="输入网易云歌单 ID" />
+            <button type="submit">加载歌单</button>
+            <a class="help-link" href="/music/netease.html" target="_blank" rel="noopener noreferrer">如何获取网易云歌单 ID</a>
+          </form>
+          <p class="playlist-hint" id="playlist-hint">输入网易云歌单 ID 后点击加载</p>
+        </div>
+      </section>
       <section class="saved-playlists" id="saved-playlists" aria-label="已保存歌单"></section>
       <div id="aplayer" aria-label="音乐播放器"></div>
       <p class="api-note"><span class="dot"></span>歌单信息由 Meting API 实时提供</p>
@@ -66,6 +87,16 @@
       const playerHost = document.querySelector('#aplayer');
       const savedHost = document.querySelector('#saved-playlists');
       const storageKey = 'afternoon-radio-saved-playlists';
+      const playlistToggle = document.querySelector('#playlist-toggle');
+      const playlistPanel = document.querySelector('#playlist-panel');
+
+      playlistToggle.addEventListener('click', () => {
+        const isOpen = playlistToggle.getAttribute('aria-expanded') === 'true';
+        playlistToggle.setAttribute('aria-expanded', String(!isOpen));
+        playlistPanel.setAttribute('aria-hidden', String(isOpen));
+        playlistPanel.classList.toggle('is-open', !isOpen);
+        if (!isOpen) input.focus();
+      });
 
       const savedIds = () => {
         try { return JSON.parse(localStorage.getItem(storageKey)) || []; }
@@ -123,17 +154,20 @@
         const rendered = new MutationObserver(() => {
           if (player.querySelector('.aplayer')) {
             hint.textContent = `已加载歌单 ${id}`;
+            playerHost.classList.remove('is-loading');
+            playerHost.classList.add('is-ready');
             rendered.disconnect();
           }
         });
         rendered.observe(player, { childList: true, subtree: true });
+        playerHost.classList.remove('is-ready');
+        playerHost.classList.add('is-loading');
         playerHost.replaceChildren(player);
         const ids = savedIds();
         if (!ids.includes(id)) {
           localStorage.setItem(storageKey, JSON.stringify([...ids, id]));
           renderSaved();
         }
-        hint.textContent = `正在加载歌单 ${id}…`;
         hint.textContent = `正在加载歌单 ${id}，已自动保存到本机浏览器。`;
       });
 
