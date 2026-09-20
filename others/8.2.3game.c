@@ -17,7 +17,7 @@ int main(int argc, char const *argv[])
 {
     int player = 0;
 
-    int v = 1;
+    int v++ = 1;
     srand(time(NULL));
     int first = rand() % 2 + 0; // 先手 1 -> player 0 -> bot
     for (int loop = 0 ; 1 ;loop++)
