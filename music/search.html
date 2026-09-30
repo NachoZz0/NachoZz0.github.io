@@ -25,11 +25,15 @@
       .status.loading::before { content: ""; display: inline-block; width: 12px; height: 12px; margin: 0 8px -1px 0; border: 2px solid rgba(216,197,255,.28); border-top-color: #d8c5ff; border-radius: 50%; animation: spin .7s linear infinite; }
       .results { display: grid; gap: 9px; }
       .results.is-visible { animation: results-in .36s ease both; }
-      .song { display: flex; align-items: center; gap: 14px; width: 100%; padding: 11px; border: 1px solid rgba(255,255,255,.1); border-radius: 14px; text-align: left; background: rgba(255,255,255,.05); }
+      .song { display: flex; align-items: center; gap: 14px; width: 100%; padding: 11px; border: 1px solid rgba(255,255,255,.1); border-radius: 14px; text-align: left; background: rgba(255,255,255,.05); cursor: pointer; }
       .song:hover { background: rgba(255,255,255,.12); }
       .song img, .cover-placeholder { flex: 0 0 44px; width: 44px; height: 44px; border-radius: 9px; object-fit: cover; background: #513685; }
+      .song-details { flex: 1; min-width: 0; }
       .song-name { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
       .song-artist { display: block; margin-top: 4px; color: #bbb4c8; font-size: .8rem; }
+      .download { flex: 0 0 auto; height: 34px; padding: 0 13px; border: 1px solid rgba(216,197,255,.35); border-radius: 9px; color: #d8c5ff; font-size: .8rem; font-weight: 700; background: rgba(141,98,239,.18); }
+      .download:hover { color: #fff; background: #8056de; transform: none; }
+      .download:disabled { cursor: progress; opacity: .6; }
       #player { margin-top: 22px; overflow: hidden; border-radius: 16px; box-shadow: 0 12px 30px rgba(0,0,0,.22); }
       #player:empty { display: none; }
       #fixed-player { display: contents; }
@@ -73,19 +77,61 @@
         results.replaceChildren();
         results.classList.remove('is-visible');
         songs.slice(0, 20).forEach((song) => {
-          const item = document.createElement('button');
+          const item = document.createElement('div');
           item.className = 'song';
+          item.setAttribute('role', 'button');
+          item.tabIndex = 0;
           const cover = song.cover || song.pic || song.album?.picUrl;
           if (cover) { const image = document.createElement('img'); image.src = cover; image.alt = ''; item.append(image); }
           else { const placeholder = document.createElement('span'); placeholder.className = 'cover-placeholder'; item.append(placeholder); }
           const details = document.createElement('span');
+          details.className = 'song-details';
           const name = document.createElement('strong'); name.className = 'song-name'; name.textContent = song.name || song.title || '未命名单曲';
           const artist = document.createElement('span'); artist.className = 'song-artist'; artist.textContent = artistText(song.artist || song.artists);
-          details.append(name, artist); item.append(details);
+          details.append(name, artist);
+          const download = document.createElement('button');
+          download.type = 'button';
+          download.className = 'download';
+          download.textContent = '下载';
+          download.title = `下载 ${name.textContent}`;
+          download.setAttribute('aria-label', `下载 ${name.textContent}`);
+          download.addEventListener('click', (event) => { event.stopPropagation(); save(song, download); });
+          item.append(details, download);
           item.addEventListener('click', () => play(song));
+          item.addEventListener('keydown', (event) => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); play(song); } });
           results.append(item);
         });
         requestAnimationFrame(() => results.classList.add('is-visible'));
+      };
+      const downloadName = (song) => {
+        const title = `${song.name || song.title || '未命名单曲'} - ${artistText(song.artist || song.artists)}`;
+        return `${title.replace(/[\\/:*?"<>|\u0000-\u001f]+/g, '_').trim().slice(0, 120)}.mp3`;
+      };
+      const save = async (song, button) => {
+        const source = song.url || song.src;
+        const title = song.name || song.title || '未命名单曲';
+        if (!source) { status.className = 'status'; status.textContent = '该单曲暂时没有可用下载链接。'; return; }
+        button.disabled = true; button.textContent = '下载中…';
+        status.className = 'status'; status.textContent = `正在下载：${title}`;
+        try {
+          const response = await fetch(source);
+          if (!response.ok) throw new Error('请求失败');
+          const blob = await response.blob();
+          if (!blob.size) throw new Error('文件为空');
+          const objectUrl = URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.href = objectUrl; link.download = downloadName(song);
+          document.body.append(link); link.click(); link.remove();
+          setTimeout(() => URL.revokeObjectURL(objectUrl), 60000);
+          status.textContent = `已下载：${title}`;
+        } catch (error) {
+          status.textContent = `下载失败，已在新标签页打开音频链接：${title}`;
+          const link = document.createElement('a');
+          link.href = source; link.download = downloadName(song); link.target = '_blank'; link.rel = 'noopener';
+          document.body.append(link); link.click(); link.remove();
+        } finally {
+          button.disabled = false; button.textContent = '下载';
+        }
       };
       const play = (song) => {
         const source = song.url || song.src;
