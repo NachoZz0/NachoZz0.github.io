@@ -1,6 +1,6 @@
 // 设置特殊显示日期
 const MyBIrthday = "08-27";
-
+const NachoNekoBirthday = "10-11"
 
 // 获取今天日期
 function getToday() {
@@ -45,7 +45,19 @@ window.onload = function () {
             "今天是我生日，我想听听那个😆";
 
         return;
+    } else if (today == NachoNekoBirthday)
+    {
+
+        openPopup();
+
+        // 可以换成特殊图片/文字
+        document.querySelector(".popup-title").innerHTML = "";
+        document.querySelector(".popup-text").innerHTML =
+            "甘城猫猫生日快乐喵~";
+
+        return;
     }
+    
 
 
     // 普通弹窗只显示一次
