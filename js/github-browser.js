@@ -1,0 +1,209 @@
+
+(() => {
+  const OWNER = "LSTM-Kirigaya";
+  const REPO = "Live2dRender";
+  const API = `https://api.github.com/repos/${OWNER}/${REPO}`;
+
+  const root = document.getElementById("github-browser");
+  if (!root) {
+    console.error("找不到 #github-browser 容器");
+    return;
+  }
+
+  let branch = "";
+  let currentPath = "";
+  let requestId = 0;
+
+  root.innerHTML = `
+    <div class="gh-card">
+      <div class="gh-header">
+        <div class="gh-title">${OWNER} / ${REPO}</div>
+        <div class="gh-subtitle">GitHub Repository Browser</div>
+      </div>
+      <div class="gh-toolbar">
+        <button type="button" class="gh-button" id="gh-up">
+          ↑ 返回上级
+        </button>
+        <a class="gh-button"
+           href="https://github.com/${OWNER}/${REPO}"
+           target="_blank" rel="noopener noreferrer">
+          在 GitHub 打开 ↗
+        </a>
+        <div class="gh-breadcrumb" id="gh-breadcrumb"></div>
+      </div>
+      <div class="gh-list" id="gh-list">
+        <div class="gh-status">正在加载文件列表…</div>
+      </div>
+    </div>
+  `;
+
+  const list = root.querySelector("#gh-list");
+  const breadcrumb = root.querySelector("#gh-breadcrumb");
+  const upButton = root.querySelector("#gh-up");
+
+  function make(tag, className, text) {
+    const node = document.createElement(tag);
+    if (className) node.className = className;
+    if (text !== undefined) node.textContent = text;
+    return node;
+  }
+
+  function showMessage(message, error = false) {
+    const node = make(
+      "div",
+      "gh-status" + (error ? " gh-error" : ""),
+      message
+    );
+    list.replaceChildren(node);
+  }
+
+  function renderBreadcrumb() {
+    breadcrumb.replaceChildren();
+
+    const home = make("a", "", REPO);
+    home.href = "#";
+    home.addEventListener("click", event => {
+      event.preventDefault();
+      navigate("");
+    });
+    breadcrumb.append(home);
+
+    let path = "";
+
+    for (const part of currentPath.split("/").filter(Boolean)) {
+      breadcrumb.append(make("span", "", "/"));
+      path = path ? `${path}/${part}` : part;
+
+      const target = path;
+      const a = make("a", "", part);
+      a.href = "#";
+      a.addEventListener("click", event => {
+        event.preventDefault();
+        navigate(target);
+      });
+      breadcrumb.append(a);
+    }
+
+    upButton.disabled = !currentPath;
+  }
+
+  upButton.addEventListener("click", () => {
+    const parts = currentPath.split("/").filter(Boolean);
+    parts.pop();
+    navigate(parts.join("/"));
+  });
+
+  async function navigate(path) {
+    currentPath = path;
+    const id = ++requestId;
+
+    renderBreadcrumb();
+    showMessage("正在加载文件列表…");
+
+    try {
+      const url = new URL(
+        `${API}/contents/${path
+          .split("/")
+          .filter(Boolean)
+          .map(encodeURIComponent)
+          .join("/")}`
+      );
+
+      url.searchParams.set("ref", branch);
+
+      const response = await fetch(url, {
+        headers: { Accept: "application/vnd.github+json" }
+      });
+
+      if (!response.ok) {
+        throw new Error(`GitHub API 请求失败：HTTP ${response.status}`);
+      }
+
+      const data = await response.json();
+
+      if (id !== requestId) return;
+
+      if (!Array.isArray(data)) {
+        throw new Error("API 返回的不是目录列表");
+      }
+
+      data.sort((a, b) => {
+        if (a.type !== b.type) return a.type === "dir" ? -1 : 1;
+        return a.name.localeCompare(b.name);
+      });
+
+      if (data.length === 0) {
+        showMessage("这个目录是空的。");
+        return;
+      }
+
+      const fragment = document.createDocumentFragment();
+
+      for (const file of data) {
+        const isDirectory = file.type === "dir";
+        const row = make("div", "gh-row");
+        const icon = make("span", "gh-icon", isDirectory ? "📁" : "📄");
+        const name = make("a", "gh-name", file.name);
+        const detail = make(
+          "span",
+          "gh-kind",
+          isDirectory ? "文件夹" : formatSize(file.size)
+        );
+
+        if (isDirectory) {
+          name.href = "#";
+          name.addEventListener("click", event => {
+            event.preventDefault();
+            navigate(
+              currentPath
+                ? `${currentPath}/${file.name}`
+                : file.name
+            );
+          });
+        } else {
+          name.href = file.html_url;
+          name.target = "_blank";
+          name.rel = "noopener noreferrer";
+        }
+
+        row.append(icon, name, detail);
+        fragment.append(row);
+      }
+
+      list.replaceChildren(fragment);
+      console.log(`GitHub 文件浏览器：已显示 ${data.length} 项`);
+    } catch (error) {
+      if (id !== requestId) return;
+      console.error("GitHub 文件浏览器加载失败：", error);
+      showMessage(error.message || "加载失败，请检查网络。", true);
+    }
+  }
+
+  function formatSize(size = 0) {
+    if (size < 1024) return `${size} B`;
+    if (size < 1024 * 1024) return `${(size / 1024).toFixed(1)} KB`;
+    return `${(size / 1024 / 1024).toFixed(1)} MB`;
+  }
+
+  async function init() {
+    try {
+      const response = await fetch(API, {
+        headers: { Accept: "application/vnd.github+json" }
+      });
+
+      if (!response.ok) {
+        throw new Error(`仓库信息获取失败：HTTP ${response.status}`);
+      }
+
+      const info = await response.json();
+      branch = info.default_branch;
+
+      await navigate("");
+    } catch (error) {
+      console.error(error);
+      showMessage(error.message || "初始化失败", true);
+    }
+  }
+
+  init();
+})();
