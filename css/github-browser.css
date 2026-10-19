@@ -144,3 +144,62 @@
     display: none;
   }
 }
+
+#github-readme {
+  margin-top: 24px;
+  padding: 20px;
+  border: 1px solid var(--gh-border, #d1d9e0);
+  border-radius: 10px;
+  overflow-wrap: anywhere;
+  line-height: 1.7;
+}
+
+#github-readme h1,
+#github-readme h2 {
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--gh-border, #d1d9e0);
+}
+
+#github-readme h1 {
+  font-size: 1.8em;
+}
+
+#github-readme h2 {
+  font-size: 1.4em;
+}
+
+#github-readme img {
+  max-width: 100%;
+  height: auto;
+}
+
+#github-readme pre {
+  padding: 16px;
+  overflow-x: auto;
+  border-radius: 8px;
+  background: rgba(127, 127, 127, 0.1);
+}
+
+#github-readme code {
+  overflow-wrap: anywhere;
+}
+
+#github-readme table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  border-collapse: collapse;
+}
+
+#github-readme th,
+#github-readme td {
+  padding: 8px 12px;
+  border: 1px solid var(--gh-border, #d1d9e0);
+}
+
+#github-readme blockquote {
+  margin-left: 0;
+  padding-left: 16px;
+  border-left: 4px solid var(--gh-border, #d1d9e0);
+  color: var(--gh-muted, #656d76);
+}

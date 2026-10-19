@@ -1,7 +1,7 @@
 
 (() => {
-  const OWNER = "LSTM-Kirigaya";
-  const REPO = "Live2dRender";
+  const OWNER = "NachoZz0";
+  const REPO = "neteasePlayer";
   const API = `https://api.github.com/repos/${OWNER}/${REPO}`;
 
   const root = document.getElementById("github-browser");
@@ -185,6 +185,85 @@
     return `${(size / 1024 / 1024).toFixed(1)} MB`;
   }
 
+async function loadReadme() {
+  const container = document.getElementById("github-readme");
+  if (!container) return;
+
+  container.textContent = "正在加载 README.md…";
+
+  try {
+    const url =
+      `https://api.github.com/repos/${OWNER}/${REPO}/readme`;
+
+    const response = await fetch(url, {
+      headers: {
+        Accept: "application/vnd.github+json"
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error(`读取 README 失败：HTTP ${response.status}`);
+    }
+
+    const data = await response.json();
+
+    // GitHub API 返回的内容经过 Base64 编码
+    const binary = atob(data.content.replace(/\s/g, ""));
+    const bytes = Uint8Array.from(binary, c => c.charCodeAt(0));
+    const markdown = new TextDecoder("utf-8").decode(bytes);
+
+    if (typeof marked === "undefined") {
+      throw new Error("Markdown 渲染库没有加载成功");
+    }
+
+    // 将 README 中的相对链接和图片转换成 GitHub 地址
+    const base = `https://github.com/${OWNER}/${REPO}/blob/HEAD/`;
+
+    const html = marked.parse(markdown);
+
+    const template = document.createElement("template");
+    template.innerHTML = html;
+
+    // 修正相对路径，并限制危险的链接协议
+    for (const node of template.content.querySelectorAll(
+      "a[href], img[src]"
+    )) {
+      const attr = node.tagName === "IMG" ? "src" : "href";
+      const value = node.getAttribute(attr);
+
+      if (!value) continue;
+
+      try {
+        const resolved = new URL(value, base);
+
+        if (!["https:", "http:"].includes(resolved.protocol)) {
+          node.removeAttribute(attr);
+          continue;
+        }
+
+        node.setAttribute(attr, resolved.href);
+      } catch {
+        node.removeAttribute(attr);
+      }
+    }
+
+    container.replaceChildren(template.content);
+  } catch (error) {
+    console.error("README 加载失败：", error);
+    container.textContent =
+      `${error.message}。你可以直接访问 GitHub 查看 README。`;
+
+    const link = document.createElement("a");
+    link.href = `https://github.com/${OWNER}/${REPO}#readme`;
+    link.textContent = "打开 GitHub README";
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+
+    container.appendChild(document.createElement("br"));
+    container.appendChild(link);
+  }
+}
+
   async function init() {
     try {
       const response = await fetch(API, {
@@ -199,11 +278,13 @@
       branch = info.default_branch;
 
       await navigate("");
+      await loadReadme();
     } catch (error) {
       console.error(error);
       showMessage(error.message || "初始化失败", true);
     }
   }
 
+  
   init();
 })();
