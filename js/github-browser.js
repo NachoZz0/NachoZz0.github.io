@@ -185,6 +185,7 @@
     return `${(size / 1024 / 1024).toFixed(1)} MB`;
   }
 
+  
 async function loadReadme() {
   const container = document.getElementById("github-readme");
   if (!container) return;
@@ -285,6 +286,5 @@ async function loadReadme() {
     }
   }
 
-  
   init();
 })();

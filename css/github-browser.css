@@ -143,8 +143,7 @@
   .gh-kind {
     display: none;
   }
-}
-
+  
 #github-readme {
   margin-top: 24px;
   padding: 20px;
@@ -202,4 +201,6 @@
   padding-left: 16px;
   border-left: 4px solid var(--gh-border, #d1d9e0);
   color: var(--gh-muted, #656d76);
+}
+
 }
